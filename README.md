@@ -5,6 +5,11 @@
 Here it should be a short text that explais what this project is.
 
 ---
+## Contributer
+
+- Daniel Martinsen <daniel.martinsen@online.no>
+
+---
 ## License & copyright
 
-(c) Martinsen Development
+© Martinsen Development 2020
