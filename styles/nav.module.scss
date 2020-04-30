@@ -1,0 +1,45 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+@mixin status($background, $color) {
+  background-color: $background;
+  color: $color;
+}
+
+.nav {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 26px;
+  text-align: center;
+  padding: 20px;
+
+  @include status($beige, $dark);
+}
+
+.navActive {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 26px;
+  text-align: center;
+  padding: 20px;
+
+  @include status($dark, $white);
+}
+
+.link {
+  text-decoration: none;
+  width: 100%;
+}
+
+.container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  display: flex;
+}
