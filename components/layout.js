@@ -14,7 +14,7 @@ export default function layout({ children }) {
           rel='stylesheet'
         />
       </Head>
-      <div>{children}</div>
+      <main>{children}</main>
       <Nav />
     </div>
   )

@@ -9,26 +9,27 @@ $beige: #ecbfa0;
   color: $color;
 }
 
-.nav {
+@mixin navigation() {
   font-family: 'Ubuntu', sans-serif;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 26px;
+  font-size: 35px;
   text-align: center;
-  padding: 20px;
-
-  @include status($beige, $dark);
+  padding: 10px;
 }
 
-.navActive {
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 26px;
-  text-align: center;
-  padding: 20px;
+.nav {
+  background-color: $beige;
+  color: $dark;
 
-  @include status($dark, $white);
+  @include navigation();
+}
+
+.active {
+  background-color: $dark;
+  color: $white;
+
+  @include navigation();
 }
 
 .link {
