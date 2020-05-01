@@ -17,13 +17,13 @@ $beige: #ecbfa0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 70%;
+  width: 90%;
   margin: 50px 0px 0px 0px;
 }
 
 .inputField {
   @include input();
-  width: 40%;
+  width: 45%;
   margin: 10px;
 }
 
