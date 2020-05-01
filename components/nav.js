@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styles from '../styles/nav.module.scss'
 
-export default function nav() {
+export default function Nav() {
   const router = useRouter()
 
   return (

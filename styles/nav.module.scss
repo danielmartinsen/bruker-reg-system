@@ -4,11 +4,6 @@ $red: #fa8a8a;
 $green: #a6d89b;
 $beige: #ecbfa0;
 
-@mixin status($background, $color) {
-  background-color: $background;
-  color: $color;
-}
-
 @mixin navigation() {
   font-family: 'Ubuntu', sans-serif;
   font-weight: bold;
