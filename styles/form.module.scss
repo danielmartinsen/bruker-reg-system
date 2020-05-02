@@ -8,6 +8,7 @@ $beige: #ecbfa0;
   height: 60px;
   font-size: 35px;
   background-color: $white;
+  color: $dark;
   border: none;
   border-radius: 0px;
   outline: none;
@@ -34,10 +35,11 @@ $beige: #ecbfa0;
 }
 
 .registrerKjonn {
+  @include input();
+
   display: block;
-  width: 90%;
-  background-color: $white;
-  color: $dark;
+  width: 95%;
+  margin: 10px;
 }
 
 .button {
@@ -46,10 +48,10 @@ $beige: #ecbfa0;
   padding: 20px;
 
   background: transparent;
-  border: 8px solid $green;
+  border: 6px solid $green;
 
   color: $green;
   text-transform: uppercase;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
 }
