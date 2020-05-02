@@ -25,20 +25,21 @@ $beige: #ecbfa0;
 
 .inputField {
   @include input();
+
   width: 45%;
   margin: 10px;
   -webkit-appearance: none;
 }
 
 .velgKjonn {
-  display: inline;
-  @include input();
+  color: $dark;
+  font-size: 25px;
 }
 
 .registrerKjonn {
   @include input();
 
-  display: block;
+  display: flex;
   width: 95%;
   margin: 10px;
 }
