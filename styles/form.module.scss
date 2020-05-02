@@ -33,7 +33,7 @@ $beige: #ecbfa0;
 
 .velgKjonn {
   opacity: 0;
-  width: 0;
+  display: none;
 
   &:checked + label {
     background-color: $green;
@@ -49,7 +49,7 @@ $beige: #ecbfa0;
 
   label {
     @include input();
-    margin: 5px;
+    margin: 10px;
     width: 100%;
 
     &:hover {
