@@ -4,9 +4,9 @@ import styles from '../styles/layout.module.scss'
 
 const siteTitle = 'Velkommen!'
 
-export default function Layout({ children }) {
+export default function Layout({ children, title }) {
   return (
-    <div>
+    <div className={styles.content}>
       <Head>
         <title>{siteTitle}</title>
         <link rel='icon' href='/favicon.ico' />
@@ -16,6 +16,7 @@ export default function Layout({ children }) {
           rel='stylesheet'
         />
       </Head>
+      <p className={styles.title}>{title}</p>
       <main className={styles.content}>{children}</main>
       <Nav />
     </div>

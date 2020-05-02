@@ -2,4 +2,9 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 30px;
 }
