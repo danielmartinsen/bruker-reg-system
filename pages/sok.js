@@ -2,8 +2,8 @@ import Layout from '../components/layout'
 
 export default function Home() {
   return (
-    <Layout>
-      <div>hei</div>
+    <Layout title='Begynn å skrive inn navnet ditt'>
+      <div></div>
     </Layout>
   )
 }

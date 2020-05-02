@@ -28,7 +28,7 @@ export default function form() {
         className={styles.inputField}
       />
 
-      <div className={styles.registrerForm}>
+      <div className={styles.registrerKjonn}>
         <input
           type='radio'
           name='kjønn'
@@ -53,6 +53,10 @@ export default function form() {
         />
         <label>Annet</label>
       </div>
+
+      <button type='submit' className={styles.button}>
+        Registrer meg!
+      </button>
     </form>
   )
 }
