@@ -22,9 +22,11 @@ export default function form() {
         className={styles.inputField}
       />
       <input
-        type='date'
+        type='text'
         placeholder='Bursdag'
         name='Bursdag'
+        onFocus={(e) => (e.target.type = 'date')}
+        onBlur={(e) => (e.target.type = 'text')}
         className={styles.inputField}
       />
 
