@@ -3,7 +3,7 @@ import Form from '../components/form'
 
 export default function Home() {
   return (
-    <Layout>
+    <Layout title='Fyll ut for å registrere deg'>
       <Form />
     </Layout>
   )
