@@ -17,18 +17,14 @@ export default function form() {
       />
 
       <div className={styles.registrerKjonn}>
-        <p className={styles.forklaring}>Velg kjønn: </p>
+        <input type='radio' name='kjønn' value='Gutt' id='gutt' className={styles.velgKjonn} required />
+        <label for='gutt'>Gutt</label>
 
-        <div className={styles.velgKjonn}>
-          <input type='radio' name='kjønn' value='Gutt' id='gutt' className={styles.velgKjonnButton} required />
-          <label for='gutt'>Gutt</label>
+        <input type='radio' name='kjønn' value='Jente' id='jente' className={styles.velgKjonn} required />
+        <label for='jente'>Jente</label>
 
-          <input type='radio' name='kjønn' value='Jente' id='jente' className={styles.velgKjonnButton} required />
-          <label for='jente'>Jente</label>
-
-          <input type='radio' name='kjønn' value='Annet' id='annet' className={styles.velgKjonnButton} required />
-          <label for='annet'>Annet</label>
-        </div>
+        <input type='radio' name='kjønn' value='Annet' id='annet' className={styles.velgKjonn} required />
+        <label for='annet'>Annet</label>
       </div>
 
       <button type='submit' className={styles.button}>
