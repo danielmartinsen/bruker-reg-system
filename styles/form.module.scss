@@ -4,10 +4,10 @@ $red: #fa8a8a;
 $green: #a6d89b;
 $beige: #ecbfa0;
 
-@mixin input() {
+@mixin input($bg-color) {
   height: 60px;
   font-size: 35px;
-  background-color: $white;
+  background-color: $bg-color;
   color: $dark;
   border: none;
   border-radius: 0px;
@@ -19,12 +19,12 @@ $beige: #ecbfa0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 80%;
+  width: 85%;
   margin: 50px 0px 0px 0px;
 }
 
 .inputField {
-  @include input();
+  @include input($white);
 
   width: 100%;
   margin: 10px;
@@ -38,7 +38,7 @@ $beige: #ecbfa0;
   text-align: center;
 
   label {
-    @include input();
+    @include input(#b5b6bd);
     margin: 10px;
     width: 100%;
 
@@ -70,4 +70,11 @@ $beige: #ecbfa0;
   text-transform: uppercase;
   font-size: 30px;
   font-weight: bold;
+
+  &:focus,
+  &:active,
+  &:hover {
+    background: $green;
+    color: $dark;
+  }
 }
