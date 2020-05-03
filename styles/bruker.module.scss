@@ -5,19 +5,19 @@ $green: #a6d89b;
 $beige: #ecbfa0;
 
 .card {
+  flex: 0 1 calc(30% - 10px); /* <-- adjusting for margin */
   text-align: center;
   border-radius: 10px;
   background-color: $white;
   color: $dark;
   padding: 10px;
-  width: 25%;
   margin: 10px;
 
   button {
     width: 100%;
-    height: 50px;
+    height: 75px;
     background: $green;
-    font-size: 20px;
+    font-size: 30px;
     text-transform: uppercase;
     font-weight: bold;
     padding: 10px;
@@ -27,6 +27,7 @@ $beige: #ecbfa0;
   }
 
   h1 {
+    font-size: 30px;
     text-transform: capitalize;
   }
 }
