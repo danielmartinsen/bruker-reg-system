@@ -19,29 +19,19 @@ $beige: #ecbfa0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 90%;
+  width: 80%;
   margin: 50px 0px 0px 0px;
 }
 
 .inputField {
   @include input();
 
-  width: 45%;
+  width: 100%;
   margin: 10px;
   -webkit-appearance: none;
 }
 
-.velgKjonn {
-  opacity: 0;
-  display: none;
-
-  &:checked + label {
-    background-color: $green;
-    border-color: $green;
-  }
-}
-
-.registrerKjonn {
+.container {
   display: flex;
   width: 100%;
   padding: 0px;
@@ -55,6 +45,16 @@ $beige: #ecbfa0;
     &:hover {
       background-color: $green;
     }
+  }
+}
+
+.velgKjonn {
+  opacity: 0;
+  display: none;
+
+  &:checked + label {
+    background-color: $green;
+    border-color: $green;
   }
 }
 
