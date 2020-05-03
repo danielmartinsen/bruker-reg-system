@@ -9,11 +9,11 @@ export default function Home() {
       <Input />
 
       <div className={styles.brukerList}>
-        <Bruker navn='Daniel Martinsen' />
-        <Bruker navn='Daniel Martinsen' />
-        <Bruker navn='Daniel Martinsen' />
-        <Bruker navn='Daniel Martinsen' />
-        <Bruker navn='Daniel Martinsen' />
+        <Bruker navn='Daniel Martinsen' brukerid='100' />
+        <Bruker navn='Daniel Martinsen' brukerid='101' />
+        <Bruker navn='Daniel Martinsen' brukerid='102' />
+        <Bruker navn='Daniel Martinsen' brukerid='103' />
+        <Bruker navn='Daniel Martinsen' brukerid='105' />
       </div>
     </Layout>
   )
