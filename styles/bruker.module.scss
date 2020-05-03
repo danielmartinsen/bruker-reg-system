@@ -1,0 +1,31 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.card {
+  text-align: center;
+  border-radius: 10px;
+  background-color: $white;
+  color: $dark;
+  padding: 10px;
+  min-width: 30%;
+  margin: 10px;
+
+  button {
+    width: 100%;
+    background: $green;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+  }
+
+  h1 {
+    text-transform: capitalize;
+  }
+}

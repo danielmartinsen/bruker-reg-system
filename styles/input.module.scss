@@ -1,0 +1,18 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.input {
+  display: block;
+  height: 60px;
+  font-size: 35px;
+  background-color: transparent;
+  color: $white;
+  border: none;
+  border-bottom: 6px solid $white;
+  border-radius: 0px;
+  outline: none;
+  padding: 10px;
+}
