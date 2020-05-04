@@ -7,14 +7,14 @@ $beige: #ecbfa0;
 .container {
   display: flex;
   flex-wrap: wrap;
-  width: 30%;
+  flex-direction: column;
   justify-content: center;
   margin-top: 50px;
 }
 
 .row {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .number {
@@ -26,7 +26,9 @@ $beige: #ecbfa0;
   width: 100px;
   height: 100px;
   margin: 10px;
+  padding: 0px;
 
   font-size: 50px;
+  line-height: 0;
   font-weight: bold;
 }
