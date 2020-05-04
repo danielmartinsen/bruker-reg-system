@@ -1,9 +1,9 @@
 import Layout from '../components/layout'
 
-const { LICENSE_KEY } = process.env
+const License = process.env.LICENSE_KEY
 
 export default function Home() {
-  console.log({ LICENSE_KEY })
+  console.log(process.env)
 
   return (
     <Layout title='Tast brukernummeret ditt'>
