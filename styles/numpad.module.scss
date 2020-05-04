@@ -23,12 +23,31 @@ $beige: #ecbfa0;
   outline: none;
   background-color: $white;
 
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   margin: 10px;
   padding: 0px;
 
-  font-size: 42px;
+  font-size: 48px;
   line-height: 0;
   font-weight: bold;
+}
+
+.input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  margin-bottom: 50px;
+
+  font-size: 50px;
+  color: $white;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 1.5rem;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }

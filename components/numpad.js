@@ -1,8 +1,17 @@
+import React from 'react'
+import { loadCSS } from 'fg-loadcss'
 import styles from '../styles/numpad.module.scss'
+import Icon from '@material-ui/core/Icon'
 
 export default function numpad() {
+  React.useEffect(() => {
+    loadCSS('https://use.fontawesome.com/releases/v5.12.0/css/all.css', document.querySelector('#font-awsome-css'))
+  }, [])
+
   return (
     <div className={styles.container}>
+      <input type='number' name='brukernummer' className={styles.input} value='123' />
+
       <div className={styles.row}>
         <button className={styles.number}>1</button>
         <button className={styles.number}>2</button>
@@ -22,9 +31,13 @@ export default function numpad() {
       </div>
 
       <div className={styles.row}>
-        <button className={styles.number}>r</button>
+        <button className={styles.number}>
+          <Icon className='fa fa-sync-alt' />
+        </button>
         <button className={styles.number}>0</button>
-        <button className={styles.number}>b</button>
+        <button className={styles.number}>
+          <Icon className='fa fa-arrow-left' />
+        </button>
       </div>
     </div>
   )
