@@ -7,7 +7,7 @@ export default function Home() {
   console.log(License)
 
   return (
-    <Layout title='Tast brukernummeret ditt'>
+    <Layout title=''>
       <Numpad />
     </Layout>
   )

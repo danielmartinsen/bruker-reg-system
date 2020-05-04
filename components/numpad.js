@@ -10,7 +10,7 @@ export default function numpad() {
 
   return (
     <div className={styles.container}>
-      <input type='number' name='brukernummer' className={styles.input} value='123' />
+      <input type='text' name='brukernummer' className={styles.input} placeholder='Tast brukernummeret ditt' />
 
       <div className={styles.row}>
         <button className={styles.number}>1</button>
