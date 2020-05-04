@@ -1,0 +1,32 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 30%;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.number {
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  background-color: $white;
+
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+
+  font-size: 50px;
+  font-weight: bold;
+}
