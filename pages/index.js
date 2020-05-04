@@ -1,9 +1,11 @@
 import Layout from '../components/layout'
 
+const License = process.env.LICENSE_KEY
+
 export default function Home() {
   return (
     <Layout title='Tast brukernummeret ditt'>
-      <div>{process.env.LICENSE_KEY}</div>
+      <div>{License}</div>
     </Layout>
   )
 }
