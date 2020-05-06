@@ -1,10 +1,8 @@
 import Layout from '../components/layout'
 import Numpad from '../components/numpad'
 
-const License = process.env.LICENSE_KEY
-
 export default function Home() {
-  console.log(License)
+  console.log(process.env.REACT_APP_LICENSE)
 
   return (
     <Layout title=''>
