@@ -5,7 +5,6 @@ export default function Home() {
   return (
     <Layout title=''>
       <Numpad />
-      <p>{process.env.LICENSE_KEY}</p>
     </Layout>
   )
 }
