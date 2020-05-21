@@ -1,7 +1,17 @@
+const dotenv = require('dotenv')
+dotenv.config()
+
 module.exports = {
   env: {
     LICENSE_KEY: process.env.LICENSE_KEY,
-    API_USERNAME: process.env.API_USERNAME,
-    API_PASSWORD: process.env.API_PASSWORD,
+
+    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
+    FIREBASE_DATABASE_URL: process.env.FIREBASE_DATABASE_URL,
+    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
+    FIREBASE__STORAGE_BUCKET: process.env.FIREBASE__STORAGE_BUCKET,
+    FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
+    FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
   },
 }
