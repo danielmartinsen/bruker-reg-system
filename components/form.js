@@ -19,8 +19,8 @@ export default function form() {
 
   const increment = firebase.firestore.FieldValue.increment(1)
 
-  const handleOpen = (fornavn, brukernummer) => {
-    setData({ fornavn: fornavn, brukernummer: brukernummer })
+  const handleOpen = (title, message) => {
+    setData({ title: title, message: message })
     setOpen(true)
   }
 
@@ -55,21 +55,33 @@ export default function form() {
           batch
             .commit()
             .then(() => {
-              handleOpen(data.fornavn, newUserID)
+              handleOpen(
+                `Velkommen, ${data.fornavn}!`,
+                `Du er nå registrert og sjekket inn. Brukernummeret ditt er ${newUserID}. Dette trenger du neste gang du sjekker inn.`
+              )
 
               setTimeout(() => {
                 Router.push('/')
               }, 3000)
             })
             .catch((error) => {
-              alert(`Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`)
+              handleOpen(
+                'Error',
+                `Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`
+              )
+              setTimeout(() => {
+                handleClose
+              }, 3000)
             })
         })
         .catch((error) => {
           console.log > error
         })
     } else {
-      alert('Vennligst fyll ut alle feltene!')
+      handleOpen('Error', 'Du må fylle ut alle feltene for å registrere deg!')
+      setTimeout(() => {
+        handleClose
+      }, 3000)
     }
   }
 
@@ -77,16 +89,11 @@ export default function form() {
     <>
       <Dialog open={open} onClose={handleClose} disableBackdropClick>
         <DialogTitle id='alert-dialog-title'>
-          <h2 className={styles.modalTitle}>Velkommen, {regData.fornavn}!</h2>
+          <h2 className={styles.modalTitle}>{regData.title}</h2>
         </DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            <p className={styles.modalText}>
-              Du er nå registrert og sjekket inn.
-              <br />
-              Brukernummeret ditt er <b>{regData.brukernummer}</b>. Dette trenger du neste gang du
-              sjekker inn.
-            </p>
+            <p className={styles.modalText}>{regData.message}</p>
           </DialogContentText>
         </DialogContent>
       </Dialog>
