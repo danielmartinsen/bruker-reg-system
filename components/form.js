@@ -27,46 +27,50 @@ export default function form() {
   const handleClose = () => setOpen(false)
 
   const onSubmit = (data) => {
-    db.collection('Kunder')
-      .doc(process.env.LICENSE_KEY)
-      .collection('Brukere')
-      .doc('--stats--')
-      .get()
-      .then((doc) => {
-        const newUserID = 100 + doc.data().userCount
+    if (data.fornavn && data.etternavn && data.telefon && data.bursdag && data.kjonn) {
+      db.collection('Kunder')
+        .doc(process.env.LICENSE_KEY)
+        .collection('Brukere')
+        .doc('--stats--')
+        .get()
+        .then((doc) => {
+          const newUserID = 100 + doc.data().userCount
 
-        const statsRef = db
-          .collection('Kunder')
-          .doc(process.env.LICENSE_KEY)
-          .collection('Brukere')
-          .doc('--stats--')
+          const statsRef = db
+            .collection('Kunder')
+            .doc(process.env.LICENSE_KEY)
+            .collection('Brukere')
+            .doc('--stats--')
 
-        const userRef = db
-          .collection('Kunder')
-          .doc(process.env.LICENSE_KEY)
-          .collection('Brukere')
-          .doc(newUserID.toString())
+          const userRef = db
+            .collection('Kunder')
+            .doc(process.env.LICENSE_KEY)
+            .collection('Brukere')
+            .doc(newUserID.toString())
 
-        const batch = db.batch()
+          const batch = db.batch()
 
-        batch.set(statsRef, { userCount: increment }, { merge: true })
-        batch.set(userRef, data)
-        batch
-          .commit()
-          .then(() => {
-            handleOpen(data.fornavn, newUserID)
+          batch.set(statsRef, { userCount: increment }, { merge: true })
+          batch.set(userRef, data)
+          batch
+            .commit()
+            .then(() => {
+              handleOpen(data.fornavn, newUserID)
 
-            setTimeout(() => {
-              Router.push('/')
-            }, 3000)
-          })
-          .catch((error) => {
-            alert(`Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`)
-          })
-      })
-      .catch((error) => {
-        console.log > error
-      })
+              setTimeout(() => {
+                Router.push('/')
+              }, 3000)
+            })
+            .catch((error) => {
+              alert(`Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`)
+            })
+        })
+        .catch((error) => {
+          console.log > error
+        })
+    } else {
+      alert('Vennligst fyll ut alle feltene!')
+    }
   }
 
   return (
@@ -96,7 +100,6 @@ export default function form() {
             className={styles.inputField}
             ref={register}
             autoComplete='off'
-            required
           />
           <input
             type='text'
@@ -105,7 +108,6 @@ export default function form() {
             className={styles.inputField}
             ref={register}
             autoComplete='off'
-            required
           />
         </div>
 
@@ -116,7 +118,6 @@ export default function form() {
             name='telefon'
             className={styles.inputField}
             ref={register}
-            required
           />
           <input
             type='text'
@@ -126,7 +127,6 @@ export default function form() {
             onBlur={(e) => (e.target.type = 'text')}
             className={styles.inputField}
             ref={register}
-            required
           />
         </div>
 
@@ -138,7 +138,6 @@ export default function form() {
             id='gutt'
             className={styles.velgKjonn}
             ref={register}
-            required
           />
           <label htmlFor='gutt'>Gutt</label>
 
@@ -149,7 +148,6 @@ export default function form() {
             id='jente'
             className={styles.velgKjonn}
             ref={register}
-            required
           />
           <label htmlFor='jente'>Jente</label>
 
@@ -160,7 +158,6 @@ export default function form() {
             id='annet'
             className={styles.velgKjonn}
             ref={register}
-            required
           />
           <label htmlFor='annet'>Annet</label>
         </div>
