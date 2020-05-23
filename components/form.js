@@ -99,7 +99,7 @@ export default function form() {
           <label htmlFor='annet'>Annet</label>
         </div>
 
-        <button type='submit' onClick={handleOpen} className={styles.button}>
+        <button onClick={handleOpen} className={styles.button}>
           Registrer meg!
         </button>
       </form>
