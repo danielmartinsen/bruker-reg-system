@@ -70,7 +70,7 @@ export default function form() {
                 `Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`
               )
               setTimeout(() => {
-                handleClose
+                handleClose()
               }, 3000)
             })
         })
@@ -80,7 +80,7 @@ export default function form() {
     } else {
       handleOpen('Error', 'Du må fylle ut alle feltene for å registrere deg!')
       setTimeout(() => {
-        handleClose
+        handleClose()
       }, 3000)
     }
   }
