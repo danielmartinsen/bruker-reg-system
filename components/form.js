@@ -98,11 +98,11 @@ export default function form() {
           />
           <label htmlFor='annet'>Annet</label>
         </div>
-
-        <button onClick={handleOpen} className={styles.button}>
-          Registrer meg!
-        </button>
       </form>
+
+      <button onClick={handleOpen} className={styles.button}>
+        Registrer meg!
+      </button>
     </>
   )
 }
