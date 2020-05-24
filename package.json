@@ -5,8 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "vercel",
-    "deploy-prod": "vercel --prod"
+    "deploy": " npx vercel",
+    "deploy-prod": "npx vercel --prod"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.14",

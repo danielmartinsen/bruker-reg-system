@@ -75,7 +75,7 @@ export default function form() {
             })
         })
         .catch((error) => {
-          console.log > error
+          console.log(error)
         })
     } else {
       handleOpen('Error', 'Du må fylle ut alle feltene for å registrere deg!')
