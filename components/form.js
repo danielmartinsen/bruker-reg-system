@@ -28,6 +28,8 @@ export default function form() {
 
   const onSubmit = (data) => {
     if (data.fornavn && data.etternavn && data.telefon && data.bursdag && data.kjonn) {
+      handleOpen(`Pling plong! Tenker bare litt...`, ``)
+
       db.collection('Kunder')
         .doc(process.env.LICENSE_KEY)
         .collection('Brukere')
@@ -48,10 +50,19 @@ export default function form() {
             .collection('Brukere')
             .doc(newUserID.toString())
 
+          const userStatsRef = db
+            .collection('Kunder')
+            .doc(process.env.LICENSE_KEY)
+            .collection('Brukere')
+            .doc(newUserID.toString())
+            .collection('Innsjekk')
+            .doc('--stats--')
+
           const batch = db.batch()
 
           batch.set(statsRef, { userCount: increment }, { merge: true })
           batch.set(userRef, data)
+          batch.set(userStatsRef, { count: 0 })
           batch
             .commit()
             .then(() => {
