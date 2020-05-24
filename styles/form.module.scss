@@ -71,13 +71,6 @@ $beige: #ecbfa0;
   text-transform: uppercase;
   font-size: 30px;
   font-weight: bold;
-
-  &:focus,
-  &:active,
-  &:hover {
-    background: $green;
-    color: $dark;
-  }
 }
 
 .modalText {

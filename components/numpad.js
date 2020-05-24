@@ -163,49 +163,49 @@ export default function numpad() {
         />
 
         <div className={styles.row}>
-          <button className={styles.number} onClick={(e) => numClick(1)}>
+          <button className={styles.number} onTouchStart={(e) => numClick(1)}>
             1
           </button>
-          <button className={styles.number} onClick={(e) => numClick(2)}>
+          <button className={styles.number} onTouchStart={(e) => numClick(2)}>
             2
           </button>
-          <button className={styles.number} onClick={(e) => numClick(3)}>
+          <button className={styles.number} onTouchStart={(e) => numClick(3)}>
             3
           </button>
         </div>
 
         <div className={styles.row}>
-          <button className={styles.number} onClick={(e) => numClick(4)}>
+          <button className={styles.number} onTouchStart={(e) => numClick(4)}>
             4
           </button>
-          <button className={styles.number} onClick={(e) => numClick(5)}>
+          <button className={styles.number} onTouchStart={(e) => numClick(5)}>
             5
           </button>
-          <button className={styles.number} onClick={(e) => numClick(6)}>
+          <button className={styles.number} onTouchStart={(e) => numClick(6)}>
             6
           </button>
         </div>
 
         <div className={styles.row}>
-          <button className={styles.number} onClick={(e) => numClick(7)}>
+          <button className={styles.number} onTouchStart={(e) => numClick(7)}>
             7
           </button>
-          <button className={styles.number} onClick={(e) => numClick(8)}>
+          <button className={styles.number} onTouchStart={(e) => numClick(8)}>
             8
           </button>
-          <button className={styles.number} onClick={(e) => numClick(9)}>
+          <button className={styles.number} onTouchStart={(e) => numClick(9)}>
             9
           </button>
         </div>
 
         <div className={styles.row}>
-          <button className={styles.number} onClick={(e) => numClick('refresh')}>
+          <button className={styles.number} onTouchStart={(e) => numClick('refresh')}>
             <Icon className='fa fa-sync-alt' />
           </button>
-          <button className={styles.number} onClick={(e) => numClick(0)}>
+          <button className={styles.number} onTouchStart={(e) => numClick(0)}>
             0
           </button>
-          <button className={styles.number} onClick={(e) => numClick('back')}>
+          <button className={styles.number} onTouchStart={(e) => numClick('back')}>
             <Icon className='fa fa-arrow-left' />
           </button>
         </div>
