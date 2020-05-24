@@ -60,83 +60,131 @@ export default function numpad() {
   function innsjekk(brukernummer) {
     handleOpen(`Pling plong! Tenker bare litt...`, ``)
 
-    db.collection('Kunder')
-      .doc(process.env.LICENSE_KEY)
-      .collection('Brukere')
-      .doc(brukernummer.toString())
-      .collection('Innsjekk')
-      .doc('--stats--')
-      .get()
-      .then((doc) => {
-        const count = (doc.data().count += 1)
+    if (brukernummer[0] == 9) {
+      const dato = new Date()
+      const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
-        db.collection('Kunder')
-          .doc(process.env.LICENSE_KEY)
-          .collection('Brukere')
-          .doc(brukernummer.toString())
-          .get()
-          .then((doc) => {
-            const globalStatsRef = db
-              .collection('Kunder')
+      db.collection('Kunder')
+        .doc(process.env.LICENSE_KEY)
+        .collection('Ansatte')
+        .doc(brukernummer.toString())
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            db.collection('Kunder')
               .doc(process.env.LICENSE_KEY)
-              .collection('Brukere')
-              .doc('--stats--')
-
-            const statsRef = db
-              .collection('Kunder')
-              .doc(process.env.LICENSE_KEY)
-              .collection('Brukere')
+              .collection('Ansatte')
               .doc(brukernummer.toString())
-              .collection('Innsjekk')
-              .doc('--stats--')
-
-            const userRef = db
-              .collection('Kunder')
-              .doc(process.env.LICENSE_KEY)
-              .collection('Brukere')
-              .doc(brukernummer.toString())
-              .collection('Innsjekk')
-              .doc(count.toString())
-
-            const dato = new Date()
-            const klokkeslett = dato.getHours()
-            const idag = dato.getDate() + '-' + dato.getMonth() + '-' + dato.getFullYear()
-
-            const batch = db.batch()
-
-            batch.set(statsRef, { count: increment }, { merge: true })
-            batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
-            batch.set(userRef, { dato: idag, klokkeslett: klokkeslett })
-            batch
-              .commit()
+              .update({
+                jobb: {
+                  dato: idag,
+                  state: true,
+                },
+              })
               .then(() => {
-                handleOpen(
-                  `Velkommen, ${doc.data().fornavn}!`,
-                  `Du er nå sjekket inn, og har besøkt oss totalt ${count} ganger!`
-                )
+                handleOpen(`Velkommen på jobb!`, `Du er registrert og sjekket inn for dagen.`)
 
                 setTimeout(() => {
                   handleClose()
-                }, 4000)
+                }, 3000)
               })
               .catch((error) => {
-                handleOpen(
-                  'Error',
-                  `Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`
-                )
+                handleOpen(`Hmmmm...`, `Jeg klarte ikke å sjekk deg inn, prøv igjen litt senere.`)
+
                 setTimeout(() => {
                   handleClose()
-                }, 4000)
+                }, 3000)
               })
-          })
-      })
-      .catch((error) => {
-        handleOpen(`Hmmmm...`, `Merkelig, men jeg kan finne deg i systemet. Har du registrert deg?`)
+          } else {
+            handleOpen(`Hmmmm...`, `Merkelig, men jeg kan finne deg i systemet.`)
 
-        setTimeout(() => {
-          handleClose()
-        }, 4000)
-      })
+            setTimeout(() => {
+              handleClose()
+            }, 3000)
+          }
+        })
+    } else {
+      db.collection('Kunder')
+        .doc(process.env.LICENSE_KEY)
+        .collection('Brukere')
+        .doc(brukernummer.toString())
+        .collection('Innsjekk')
+        .doc('--stats--')
+        .get()
+        .then((doc) => {
+          const count = (doc.data().count += 1)
+
+          db.collection('Kunder')
+            .doc(process.env.LICENSE_KEY)
+            .collection('Brukere')
+            .doc(brukernummer.toString())
+            .get()
+            .then((doc) => {
+              const globalStatsRef = db
+                .collection('Kunder')
+                .doc(process.env.LICENSE_KEY)
+                .collection('Brukere')
+                .doc('--stats--')
+
+              const statsRef = db
+                .collection('Kunder')
+                .doc(process.env.LICENSE_KEY)
+                .collection('Brukere')
+                .doc(brukernummer.toString())
+                .collection('Innsjekk')
+                .doc('--stats--')
+
+              const userRef = db
+                .collection('Kunder')
+                .doc(process.env.LICENSE_KEY)
+                .collection('Brukere')
+                .doc(brukernummer.toString())
+                .collection('Innsjekk')
+                .doc(count.toString())
+
+              const dato = new Date()
+              const klokkeslett = dato.getHours()
+              const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
+
+              const batch = db.batch()
+
+              batch.set(statsRef, { count: increment }, { merge: true })
+              batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
+              batch.set(userRef, { dato: idag, klokkeslett: klokkeslett })
+              batch
+                .commit()
+                .then(() => {
+                  handleOpen(
+                    `Velkommen, ${doc.data().fornavn}!`,
+                    `Du er nå sjekket inn, og har besøkt oss totalt ${count} ganger!`
+                  )
+
+                  setTimeout(() => {
+                    handleClose()
+                  }, 3000)
+                })
+                .catch((error) => {
+                  handleOpen(
+                    'Error',
+                    `Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`
+                  )
+                  setTimeout(() => {
+                    handleClose()
+                  }, 3000)
+                })
+            })
+        })
+        .catch((error) => {
+          handleOpen(
+            `Hmmmm...`,
+            `Merkelig, men jeg kan finne deg i systemet. Har du registrert deg?`
+          )
+
+          setTimeout(() => {
+            handleClose()
+          }, 3000)
+        })
+    }
   }
 
   return (
