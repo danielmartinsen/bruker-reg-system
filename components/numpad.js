@@ -88,14 +88,14 @@ export default function numpad() {
                 }, 3000)
               })
               .catch((error) => {
-                handleOpen(`Hmmmm...`, `Jeg klarte ikke å sjekk deg inn, prøv igjen litt senere.`)
+                handleOpen(`Beep...`, `Jeg klarte ikke å sjekk deg inn, prøv igjen litt senere.`)
 
                 setTimeout(() => {
                   handleClose()
                 }, 3000)
               })
           } else {
-            handleOpen(`Hmmmm...`, `Merkelig, men jeg kan finne deg i systemet.`)
+            handleOpen(`Beep...`, `Merkelig, men jeg kan finne deg i systemet.`)
 
             setTimeout(() => {
               handleClose()
