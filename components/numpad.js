@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../styles/numpad.module.scss'
-import Router from 'next/router'
 
 import { loadFirebase } from '../lib/firebase'
 import { loadCSS } from 'fg-loadcss'

@@ -71,15 +71,14 @@ export default function form() {
                 `Du er nå registrert og sjekket inn. Brukernummeret ditt er ${newUserID}. Dette trenger du neste gang du sjekker inn.`
               )
 
+              innsjekk(newUserID)
+
               setTimeout(() => {
                 Router.push('/')
               }, 3000)
             })
             .catch((error) => {
-              handleOpen(
-                'Error',
-                `Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`
-              )
+              handleOpen('Error', `Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere.`)
               setTimeout(() => {
                 handleClose()
               }, 3000)
@@ -94,6 +93,78 @@ export default function form() {
         handleClose()
       }, 3000)
     }
+  }
+
+  function innsjekk(brukernummer) {
+    db.collection('Kunder')
+      .doc(process.env.LICENSE_KEY)
+      .collection('Brukere')
+      .doc(brukernummer.toString())
+      .collection('Innsjekk')
+      .doc('--stats--')
+      .get()
+      .then((doc) => {
+        const count = (doc.data().count += 1)
+
+        db.collection('Kunder')
+          .doc(process.env.LICENSE_KEY)
+          .collection('Brukere')
+          .doc(brukernummer.toString())
+          .get()
+          .then((doc) => {
+            const globalStatsRef = db
+              .collection('Kunder')
+              .doc(process.env.LICENSE_KEY)
+              .collection('Brukere')
+              .doc('--stats--')
+
+            const statsRef = db
+              .collection('Kunder')
+              .doc(process.env.LICENSE_KEY)
+              .collection('Brukere')
+              .doc(brukernummer.toString())
+              .collection('Innsjekk')
+              .doc('--stats--')
+
+            const userRef = db
+              .collection('Kunder')
+              .doc(process.env.LICENSE_KEY)
+              .collection('Brukere')
+              .doc(brukernummer.toString())
+              .collection('Innsjekk')
+              .doc(count.toString())
+
+            const dato = new Date()
+            const klokkeslett = dato.getHours()
+            const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
+
+            const batch = db.batch()
+
+            batch.set(statsRef, { count: increment }, { merge: true })
+            batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
+            batch.set(userRef, { dato: idag, klokkeslett: klokkeslett })
+            batch.commit().catch((error) => {
+              handleOpen(
+                `Hmmmm...`,
+                `Merkelig, men jeg får ikke sjekket deg inn. Prøv å skriv inn brukernummeret ditt.`
+              )
+
+              setTimeout(() => {
+                Router.push('/')
+              }, 3000)
+            })
+          })
+      })
+      .catch((error) => {
+        handleOpen(
+          `Hmmmm...`,
+          `Merkelig, men jeg får ikke sjekket deg inn. Prøv å skriv inn brukernummeret ditt.`
+        )
+
+        setTimeout(() => {
+          Router.push('/')
+        }, 3000)
+      })
   }
 
   return (
