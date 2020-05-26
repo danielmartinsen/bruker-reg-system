@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "next build && next export",
+    "start": "serve ./out",
     "deploy": " npx vercel",
     "deploy-prod": "npx vercel --prod"
   },
@@ -15,11 +15,12 @@
     "dotenv": "^8.2.0",
     "fg-loadcss": "^3.1.0",
     "firebase": "^7.14.5",
-    "next": "9.3.5",
-    "react": "16.13.1",
+    "next": "^9.3.5",
+    "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
-    "react-dom": "16.13.1",
+    "react-dom": "^16.13.1",
     "react-hook-form": "^5.7.2",
-    "sass": "^1.26.5"
+    "sass": "^1.26.5",
+    "serve": "^11.3.1"
   }
 }

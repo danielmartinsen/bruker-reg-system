@@ -112,65 +112,81 @@ export default function numpad() {
         .get()
         .then((doc) => {
           const count = (doc.data().count += 1)
+          const dato = new Date()
+          const klokkeslett = dato.getHours()
+          const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
           db.collection('Kunder')
             .doc(process.env.LICENSE_KEY)
             .collection('Brukere')
             .doc(brukernummer.toString())
+            .collection('Innsjekk')
+            .doc(doc.data().count.toString())
             .get()
             .then((doc) => {
-              const globalStatsRef = db
-                .collection('Kunder')
-                .doc(process.env.LICENSE_KEY)
-                .collection('Brukere')
-                .doc('--stats--')
+              if (doc.data().dato == idag) {
+                handleOpen('Oisann', `Du har visst sjekket inn tidligere idag ;)`)
 
-              const statsRef = db
-                .collection('Kunder')
-                .doc(process.env.LICENSE_KEY)
-                .collection('Brukere')
-                .doc(brukernummer.toString())
-                .collection('Innsjekk')
-                .doc('--stats--')
+                setTimeout(() => {
+                  handleClose()
+                }, 3000)
+              } else {
+                db.collection('Kunder')
+                  .doc(process.env.LICENSE_KEY)
+                  .collection('Brukere')
+                  .doc(brukernummer.toString())
+                  .get()
+                  .then((doc) => {
+                    const globalStatsRef = db
+                      .collection('Kunder')
+                      .doc(process.env.LICENSE_KEY)
+                      .collection('Brukere')
+                      .doc('--stats--')
 
-              const userRef = db
-                .collection('Kunder')
-                .doc(process.env.LICENSE_KEY)
-                .collection('Brukere')
-                .doc(brukernummer.toString())
-                .collection('Innsjekk')
-                .doc(count.toString())
+                    const statsRef = db
+                      .collection('Kunder')
+                      .doc(process.env.LICENSE_KEY)
+                      .collection('Brukere')
+                      .doc(brukernummer.toString())
+                      .collection('Innsjekk')
+                      .doc('--stats--')
 
-              const dato = new Date()
-              const klokkeslett = dato.getHours()
-              const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
+                    const userRef = db
+                      .collection('Kunder')
+                      .doc(process.env.LICENSE_KEY)
+                      .collection('Brukere')
+                      .doc(brukernummer.toString())
+                      .collection('Innsjekk')
+                      .doc(count.toString())
 
-              const batch = db.batch()
+                    const batch = db.batch()
 
-              batch.set(statsRef, { count: increment }, { merge: true })
-              batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
-              batch.set(userRef, { dato: idag, klokkeslett: klokkeslett })
-              batch
-                .commit()
-                .then(() => {
-                  handleOpen(
-                    `Velkommen, ${doc.data().fornavn}!`,
-                    `Du er nå sjekket inn, og har besøkt oss totalt ${count} ganger!`
-                  )
+                    batch.set(statsRef, { count: increment }, { merge: true })
+                    batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
+                    batch.set(userRef, { dato: idag, klokkeslett: klokkeslett })
+                    batch
+                      .commit()
+                      .then(() => {
+                        handleOpen(
+                          `Velkommen, ${doc.data().fornavn}!`,
+                          `Du er nå sjekket inn, og har besøkt oss totalt ${count} ganger!`
+                        )
 
-                  setTimeout(() => {
-                    handleClose()
-                  }, 3000)
-                })
-                .catch((error) => {
-                  handleOpen(
-                    'Error',
-                    `Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`
-                  )
-                  setTimeout(() => {
-                    handleClose()
-                  }, 3000)
-                })
+                        setTimeout(() => {
+                          handleClose()
+                        }, 3000)
+                      })
+                      .catch((error) => {
+                        handleOpen(
+                          'Error',
+                          `Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`
+                        )
+                        setTimeout(() => {
+                          handleClose()
+                        }, 3000)
+                      })
+                  })
+              }
             })
         })
         .catch((error) => {
