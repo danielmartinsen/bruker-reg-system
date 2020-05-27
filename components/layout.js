@@ -3,6 +3,7 @@ import Nav from './nav'
 import styles from '../styles/layout.module.scss'
 import { useEffect, useState } from 'react'
 import { loadFirebase } from '../lib/firebase'
+import Router from 'next/router'
 
 const siteTitle = 'Velkommen!'
 
@@ -15,27 +16,31 @@ export default function Layout({ children, title }) {
   useEffect(() => {
     const license = localStorage.getItem('LicenseKey')
 
-    db.collection('Kunder')
-      .doc(license)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          const dato = new Date()
-          const idagDato = dato.getFullYear() + `${dato.getMonth() + 1}` + dato.getDate()
-          const lisensDato = new Date(doc.data().lisens.dato)
+    if (license) {
+      db.collection('Kunder')
+        .doc(license)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            const dato = new Date()
+            const idagDato = dato.getFullYear() + `${dato.getMonth() + 1}` + dato.getDate()
+            const lisensDato = new Date(doc.data().lisens.dato)
 
-          const lisensDatoFormattet =
-            lisensDato.getFullYear() + `${lisensDato.getMonth() + 1}` + lisensDato.getDate()
+            const lisensDatoFormattet =
+              lisensDato.getFullYear() + `${lisensDato.getMonth() + 1}` + lisensDato.getDate()
 
-          if (lisensDatoFormattet < idagDato) {
-            setGyldig(false)
-          } else if (doc.data().domene != window.location.origin) {
+            if (lisensDatoFormattet < idagDato) {
+              setGyldig(false)
+            } else if (doc.data().domene != window.location.origin) {
+              setGyldig(false)
+            }
+          } else {
             setGyldig(false)
           }
-        } else {
-          setGyldig(false)
-        }
-      })
+        })
+    } else {
+      Router.push('/lisens')
+    }
   })
 
   return (
