@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Router from 'next/router'
 import { loadFirebase } from '../lib/firebase'
 import styles from '../styles/form.module.scss'
@@ -26,12 +26,17 @@ export default function form() {
 
   const handleClose = () => setOpen(false)
 
+  var license = ''
+  useEffect(() => {
+    license = localStorage.getItem('LicenseKey')
+  })
+
   const onSubmit = (data) => {
     if (data.fornavn && data.etternavn && data.telefon && data.bursdag && data.kjonn) {
       handleOpen(`Pling plong! Tenker bare litt...`, ``)
 
       db.collection('Kunder')
-        .doc(process.env.LICENSE_KEY)
+        .doc(license)
         .collection('Brukere')
         .doc('--stats--')
         .get()
@@ -40,19 +45,19 @@ export default function form() {
 
           const statsRef = db
             .collection('Kunder')
-            .doc(process.env.LICENSE_KEY)
+            .doc(license)
             .collection('Brukere')
             .doc('--stats--')
 
           const userRef = db
             .collection('Kunder')
-            .doc(process.env.LICENSE_KEY)
+            .doc(license)
             .collection('Brukere')
             .doc(newUserID.toString())
 
           const userStatsRef = db
             .collection('Kunder')
-            .doc(process.env.LICENSE_KEY)
+            .doc(license)
             .collection('Brukere')
             .doc(newUserID.toString())
             .collection('Innsjekk')
@@ -97,7 +102,7 @@ export default function form() {
 
   function innsjekk(brukernummer) {
     db.collection('Kunder')
-      .doc(process.env.LICENSE_KEY)
+      .doc(license)
       .collection('Brukere')
       .doc(brukernummer.toString())
       .collection('Innsjekk')
@@ -107,20 +112,20 @@ export default function form() {
         const count = (doc.data().count += 1)
 
         db.collection('Kunder')
-          .doc(process.env.LICENSE_KEY)
+          .doc(license)
           .collection('Brukere')
           .doc(brukernummer.toString())
           .get()
           .then((doc) => {
             const globalStatsRef = db
               .collection('Kunder')
-              .doc(process.env.LICENSE_KEY)
+              .doc(license)
               .collection('Brukere')
               .doc('--stats--')
 
             const statsRef = db
               .collection('Kunder')
-              .doc(process.env.LICENSE_KEY)
+              .doc(license)
               .collection('Brukere')
               .doc(brukernummer.toString())
               .collection('Innsjekk')
@@ -128,7 +133,7 @@ export default function form() {
 
             const userRef = db
               .collection('Kunder')
-              .doc(process.env.LICENSE_KEY)
+              .doc(license)
               .collection('Brukere')
               .doc(brukernummer.toString())
               .collection('Innsjekk')

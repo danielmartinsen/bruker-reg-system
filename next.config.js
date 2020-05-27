@@ -3,8 +3,6 @@ dotenv.config()
 
 module.exports = {
   env: {
-    LICENSE_KEY: process.env.LICENSE_KEY,
-
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN: 'bruker-reg-system.firebaseapp.com',
     FIREBASE_DATABASE_URL: 'https://bruker-reg-system.firebaseio.com',

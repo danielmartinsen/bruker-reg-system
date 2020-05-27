@@ -18,6 +18,11 @@ export default function numpad() {
     )
   }, [])
 
+  var license = ''
+  useEffect(() => {
+    license = localStorage.getItem('LicenseKey')
+  })
+
   const [open, setOpen] = useState(false)
   const [dialogData, setData] = useState({})
 
@@ -64,14 +69,14 @@ export default function numpad() {
       const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
       db.collection('Kunder')
-        .doc(process.env.LICENSE_KEY)
+        .doc(license)
         .collection('Ansatte')
         .doc(brukernummer.toString())
         .get()
         .then((doc) => {
           if (doc.exists) {
             db.collection('Kunder')
-              .doc(process.env.LICENSE_KEY)
+              .doc(license)
               .collection('Ansatte')
               .doc(brukernummer.toString())
               .update({
@@ -104,7 +109,7 @@ export default function numpad() {
         })
     } else {
       db.collection('Kunder')
-        .doc(process.env.LICENSE_KEY)
+        .doc(license)
         .collection('Brukere')
         .doc(brukernummer.toString())
         .collection('Innsjekk')
@@ -117,7 +122,7 @@ export default function numpad() {
           const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
           db.collection('Kunder')
-            .doc(process.env.LICENSE_KEY)
+            .doc(license)
             .collection('Brukere')
             .doc(brukernummer.toString())
             .collection('Innsjekk')
@@ -132,20 +137,20 @@ export default function numpad() {
                 }, 3000)
               } else {
                 db.collection('Kunder')
-                  .doc(process.env.LICENSE_KEY)
+                  .doc(license)
                   .collection('Brukere')
                   .doc(brukernummer.toString())
                   .get()
                   .then((doc) => {
                     const globalStatsRef = db
                       .collection('Kunder')
-                      .doc(process.env.LICENSE_KEY)
+                      .doc(license)
                       .collection('Brukere')
                       .doc('--stats--')
 
                     const statsRef = db
                       .collection('Kunder')
-                      .doc(process.env.LICENSE_KEY)
+                      .doc(license)
                       .collection('Brukere')
                       .doc(brukernummer.toString())
                       .collection('Innsjekk')
@@ -153,7 +158,7 @@ export default function numpad() {
 
                     const userRef = db
                       .collection('Kunder')
-                      .doc(process.env.LICENSE_KEY)
+                      .doc(license)
                       .collection('Brukere')
                       .doc(brukernummer.toString())
                       .collection('Innsjekk')
