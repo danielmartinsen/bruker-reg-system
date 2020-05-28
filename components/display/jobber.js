@@ -1,33 +1,42 @@
 import styles from '../../styles/display/infobox.module.scss'
 import { loadFirebase } from '../../lib/firebase'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Jobber() {
   const firebase = loadFirebase()
   const db = firebase.firestore()
+  const [jobber, setJobb] = useState([])
 
   useEffect(() => {
-    var license = localStorage.getItem('LicenseKey')
+    const license = localStorage.getItem('LicenseKey')
+    const dato = new Date()
+    const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
     db.collection('Kunder')
       .doc(license)
-      .collection('Brukere')
-      .onSnapshot(
-        (querySnapshot) => {
-          querySnapshot.docChanges().forEach((change) => {
-            console.log(change.doc.data())
-          })
-        },
-        (err) => {
-          console.log(`Encountered error: ${err}`)
-        }
-      )
+      .collection('Ansatte')
+      .onSnapshot((querySnapshot) => {
+        querySnapshot.docChanges().forEach((change) => {
+          if (change.doc.data().jobb.dato && change.doc.data().jobb.state) {
+            const jobbInfo = change.doc.data().jobb
+
+            if (jobbInfo.state == true && jobbInfo.dato == idag) {
+              if (jobber.indexOf(change.doc.data().bilde) !== -1) {
+              } else {
+                setJobb([...jobber, change.doc.data().bilde])
+              }
+            }
+          }
+        })
+      })
   })
 
   return (
     <div className={styles.infoBox}>
-      <h3>Antall på jobb i dag:</h3>
-      <h1>16</h1>
+      <h3>På jobb i dag:</h3>
+      {jobber.map((ansatt) => {
+        return <img src={ansatt} className={styles.ansattImg} key={ansatt} />
+      })}
     </div>
   )
 }
