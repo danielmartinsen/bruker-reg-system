@@ -31,7 +31,10 @@ export default function Layout({ children, title }) {
 
             if (lisensDatoFormattet < idagDato) {
               setGyldig(false)
-            } else if (doc.data().domene != window.location.origin) {
+            } else if (
+              doc.data().domene != window.location.origin &&
+              doc.data().domene != 'http://localhost:3000'
+            ) {
               setGyldig(false)
             }
           } else {
