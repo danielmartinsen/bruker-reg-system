@@ -1,0 +1,28 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.infoBox {
+  width: 50%;
+  padding: 20px;
+  margin: 25px;
+
+  border-radius: 50px;
+  background-color: $white;
+
+  text-align: center;
+  color: $dark;
+
+  h1 {
+    font-size: 5rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  h3 {
+    font-size: 2rem;
+    line-height: 0;
+  }
+}

@@ -24,7 +24,10 @@ export default function LisensPage() {
             lisensDato.getFullYear() + `${lisensDato.getMonth() + 1}` + lisensDato.getDate()
 
           if (lisensDatoFormattet > idagDato) {
-            if (doc.data().domene == window.location.origin) {
+            if (
+              doc.data().domene == window.location.origin ||
+              doc.data().domene == 'http://localhost:3000'
+            ) {
               localStorage.setItem('LicenseKey', license)
               console.log(localStorage.getItem('LicenseKey'))
               alert('Lisensen er lagt til')
