@@ -6,10 +6,12 @@ import Router from 'next/router'
 import styles from '../../styles/display/index.module.scss'
 
 export default function Display() {
-  if (localStorage.getItem('LicenseKey')) {
-  } else {
-    Router.push('/lisens')
-  }
+  useEffect(() => {
+    if (localStorage.getItem('LicenseKey')) {
+    } else {
+      Router.push('/lisens')
+    }
+  })
 
   return (
     <div className={styles.wrapper}>
