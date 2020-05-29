@@ -148,7 +148,7 @@ export default function form() {
             batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
             batch.set(
               userRef,
-              { brukernummer: { dato: idag, klokkeslett: klokkeslett } },
+              { [brukernummer]: { dato: idag, klokkeslett: klokkeslett } },
               { merge: true }
             )
             batch.update(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })

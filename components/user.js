@@ -37,95 +37,80 @@ export default function bruker({ navn, brukernummer }) {
       .doc(license)
       .collection('Brukere')
       .doc(brukernummer.toString())
-      .collection('Innsjekk')
-      .doc('--stats--')
       .get()
       .then((doc) => {
-        const count = (doc.data().count += 1)
+        const count = (doc.data().innsjekkCount += 1)
         const dato = new Date()
         const klokkeslett = dato.getHours()
         const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
-        db.collection('Kunder')
-          .doc(license)
-          .collection('Brukere')
-          .doc(brukernummer.toString())
-          .collection('Innsjekk')
-          .doc(doc.data().count.toString())
-          .get()
-          .then((doc) => {
-            if (doc.data().dato == idag) {
-              handleOpen('Oisann', `Du har visst sjekket inn tidligere idag ;)`)
+        if (doc.data().innsjekk.dato == idag) {
+          handleOpen('Oisann', `Du har visst sjekket inn tidligere idag ;)`)
 
-              setTimeout(() => {
-                Router.push('/')
-              }, 3000)
-            } else {
-              db.collection('Kunder')
+          setTimeout(() => {
+            Router.push('/')
+          }, 3000)
+        } else {
+          db.collection('Kunder')
+            .doc(license)
+            .collection('Brukere')
+            .doc(brukernummer.toString())
+            .get()
+            .then((doc) => {
+              const globalStatsRef = db
+                .collection('Kunder')
+                .doc(license)
+                .collection('Brukere')
+                .doc('--stats--')
+
+              const statsRef = db
+                .collection('Kunder')
                 .doc(license)
                 .collection('Brukere')
                 .doc(brukernummer.toString())
-                .get()
-                .then((doc) => {
-                  const globalStatsRef = db
-                    .collection('Kunder')
-                    .doc(license)
-                    .collection('Brukere')
-                    .doc('--stats--')
 
-                  const statsRef = db
-                    .collection('Kunder')
-                    .doc(license)
-                    .collection('Brukere')
-                    .doc(brukernummer.toString())
-                    .collection('Innsjekk')
-                    .doc('--stats--')
+              const userRef = db.collection('Kunder').doc(license).collection('Logg').doc(idag)
 
-                  const userRef = db
-                    .collection('Kunder')
-                    .doc(license)
-                    .collection('Brukere')
-                    .doc(brukernummer.toString())
-                    .collection('Innsjekk')
-                    .doc(count.toString())
+              const userRef2 = db
+                .collection('Kunder')
+                .doc(license)
+                .collection('Brukere')
+                .doc(brukernummer.toString())
 
-                  const userRef2 = db
-                    .collection('Kunder')
-                    .doc(license)
-                    .collection('Brukere')
-                    .doc(brukernummer.toString())
+              const batch = db.batch()
 
-                  const batch = db.batch()
+              batch.update(statsRef, { innsjekkCount: increment })
+              batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
+              batch.set(
+                userRef,
+                { [brukernummer]: { dato: idag, klokkeslett: klokkeslett } },
+                { merge: true }
+              )
+              batch.update(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })
 
-                  batch.set(statsRef, { count: increment }, { merge: true })
-                  batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
-                  batch.set(userRef, { dato: idag, klokkeslett: klokkeslett })
-                  batch.update(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })
+              batch
+                .commit()
+                .then(() => {
+                  handleOpen(
+                    `Velkommen, ${doc.data().fornavn}!`,
+                    `Du er nå sjekket inn, og har besøkt oss totalt ${count} ganger!`
+                  )
 
-                  batch
-                    .commit()
-                    .then(() => {
-                      handleOpen(
-                        `Velkommen, ${doc.data().fornavn}!`,
-                        `Du er nå sjekket inn, og har besøkt oss totalt ${count} ganger!`
-                      )
-
-                      setTimeout(() => {
-                        Router.push('/')
-                      }, 3000)
-                    })
-                    .catch((error) => {
-                      handleOpen(
-                        'Error',
-                        `Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`
-                      )
-                      setTimeout(() => {
-                        Router.push('/')
-                      }, 3000)
-                    })
+                  setTimeout(() => {
+                    Router.push('/')
+                  }, 3000)
                 })
-            }
-          })
+                .catch((error) => {
+                  handleOpen(
+                    'Error',
+                    `Beep! Boop! Nå skjedde det visst en feil. Prøv igjen senere. (${error})`
+                  )
+                  setTimeout(() => {
+                    Router.push('/')
+                  }, 3000)
+                })
+            })
+        }
       })
       .catch((error) => {
         handleOpen(`Hmmmm...`, `Merkelig, men jeg kan finne deg i systemet. Har du registrert deg?`)
