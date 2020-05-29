@@ -89,11 +89,19 @@ export default function bruker({ navn, brukernummer }) {
                     .collection('Innsjekk')
                     .doc(count.toString())
 
+                  const userRef2 = db
+                    .collection('Kunder')
+                    .doc(license)
+                    .collection('Brukere')
+                    .doc(brukernummer.toString())
+
                   const batch = db.batch()
 
                   batch.set(statsRef, { count: increment }, { merge: true })
                   batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
                   batch.set(userRef, { dato: idag, klokkeslett: klokkeslett })
+                  batch.set(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })
+
                   batch
                     .commit()
                     .then(() => {

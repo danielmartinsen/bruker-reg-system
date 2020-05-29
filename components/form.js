@@ -65,6 +65,8 @@ export default function form() {
 
           const batch = db.batch()
 
+          data.innsjekk = { dato: '', klokkeslett: '' }
+
           batch.set(statsRef, { userCount: increment }, { merge: true })
           batch.set(userRef, data)
           batch.set(userStatsRef, { count: 0 })
