@@ -29,7 +29,6 @@ export default function LisensPage() {
               doc.data().domene == 'http://localhost:3000'
             ) {
               localStorage.setItem('LicenseKey', license)
-              console.log(localStorage.getItem('LicenseKey'))
               alert('Lisensen er lagt til')
               if (arg == 'display') {
                 Router.push('/display')

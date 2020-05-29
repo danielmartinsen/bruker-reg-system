@@ -6,12 +6,16 @@ export default function Jobber() {
   const firebase = loadFirebase()
   const db = firebase.firestore()
   const [jobber, setJobb] = useState([])
+  const [license, setLicense] = useState()
+
+  const dato = new Date()
+  const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
   useEffect(() => {
-    const license = localStorage.getItem('LicenseKey')
-    const dato = new Date()
-    const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
+    setLicense(localStorage.getItem('LicenseKey'))
+  })
 
+  if (license) {
     db.collection('Kunder')
       .doc(license)
       .collection('Ansatte')
@@ -29,7 +33,7 @@ export default function Jobber() {
           }
         })
       })
-  })
+  }
 
   return (
     <div className={styles.infoBox}>
