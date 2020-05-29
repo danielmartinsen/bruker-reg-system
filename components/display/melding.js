@@ -6,21 +6,19 @@ export default function Melding() {
   const firebase = loadFirebase()
   const db = firebase.firestore()
   const [melding, setMelding] = useState()
-  const [license, setLicense] = useState()
 
   useEffect(() => {
-    setLicense(localStorage.getItem('LicenseKey'))
-  })
+    const license = localStorage.getItem('LicenseKey')
 
-  if (license) {
-    db.collection('Kunder')
+    return db
+      .collection('Kunder')
       .doc(license)
       .collection('Tavle')
       .doc('--info--')
       .onSnapshot((docSnapshot) => {
         setMelding(docSnapshot.data().melding)
       })
-  }
+  })
 
   return (
     <div className={styles.meldingBox}>

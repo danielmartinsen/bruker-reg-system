@@ -10,64 +10,24 @@ export default function AntallBrukere() {
   const dato = new Date()
   const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
-  var license = ''
   useEffect(() => {
-    license = localStorage.getItem('LicenseKey')
-  })
+    const license = localStorage.getItem('LicenseKey')
 
-  function useInterval(callback, delay) {
-    const savedCallback = useRef()
-
-    useEffect(() => {
-      savedCallback.current = callback
-    }, [callback])
-
-    useEffect(() => {
-      function tick() {
-        savedCallback.current()
-      }
-      if (delay !== null) {
-        let id = setInterval(tick, delay)
-        return () => clearInterval(id)
-      }
-    }, [delay])
-  }
-
-  useInterval(() => {
-    db.collection('Kunder')
+    return db
+      .collection('Kunder')
       .doc(license)
       .collection('Logg')
       .doc(idag)
-      .get()
-      .then((doc) => {
+      .onSnapshot((docSnapshot) => {
         var antallBrukere = 0
-        for (var bruker in doc.data()) {
-          if (doc.data()[bruker].dato == idag) {
+        for (var bruker in docSnapshot.data()) {
+          if (docSnapshot.data()[bruker].dato == idag) {
             antallBrukere++
             setAntall(antallBrukere)
           }
         }
       })
-  }, 1000)
-
-  function update() {
-    console.log('Kjører nå')
-    db.collection('Kunder')
-      .doc(license)
-      .collection('Logg')
-      .doc(idag)
-      .get()
-      .then((doc) => {
-        for (var bruker in doc.data()) {
-          if (doc.data()[bruker].dato == idag) {
-            if (antall.indexOf(bruker) !== -1) {
-            } else {
-              setAntall([...antall, bruker])
-            }
-          }
-        }
-      })
-  }
+  }, [])
 
   return (
     <div className={styles.infoBox}>
