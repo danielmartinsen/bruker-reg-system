@@ -112,11 +112,9 @@ export default function form() {
       .doc(license)
       .collection('Brukere')
       .doc(brukernummer.toString())
-      .collection('Innsjekk')
-      .doc('--stats--')
       .get()
       .then((doc) => {
-        const count = (doc.data().count += 1)
+        const count = (doc.data().innsjekkCount += 1)
 
         db.collection('Kunder')
           .doc(license)
