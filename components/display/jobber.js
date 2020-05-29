@@ -17,7 +17,7 @@ export default function Jobber() {
       .collection('Ansatte')
       .onSnapshot((querySnapshot) => {
         querySnapshot.docChanges().forEach((change) => {
-          if (change.doc.data().jobb.dato && change.doc.data().jobb.state) {
+          if (change.doc.data().stats !== true) {
             const jobbInfo = change.doc.data().jobb
 
             if (jobbInfo.state == true && jobbInfo.dato == idag) {
