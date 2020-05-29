@@ -10,7 +10,7 @@ export default function LisensPage() {
   const firebase = loadFirebase()
   const db = firebase.firestore()
 
-  function checkLicense() {
+  function checkLicense(arg) {
     db.collection('Kunder')
       .doc(license)
       .get()
@@ -31,7 +31,11 @@ export default function LisensPage() {
               localStorage.setItem('LicenseKey', license)
               console.log(localStorage.getItem('LicenseKey'))
               alert('Lisensen er lagt til')
-              Router.push('/')
+              if (arg == 'display') {
+                Router.push('/display')
+              } else {
+                Router.push('/')
+              }
             } else {
               alert('Domenet stemmer ikke med det som er registrert')
             }
@@ -57,6 +61,7 @@ export default function LisensPage() {
             onChange={onChange}
           />
           <button onClick={() => checkLicense()}>OK</button>
+          <button onClick={() => checkLicense('display')}>GÅ TIL DISPLAY</button>
         </main>
       </div>
 
