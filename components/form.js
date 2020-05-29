@@ -55,14 +55,6 @@ export default function form() {
             .collection('Brukere')
             .doc(newUserID.toString())
 
-          // const userStatsRef = db
-          //   .collection('Kunder')
-          //   .doc(license)
-          //   .collection('Brukere')
-          //   .doc(newUserID.toString())
-          //   .collection('Innsjekk')
-          //   .doc('--stats--')
-
           const batch = db.batch()
 
           data.innsjekk = { dato: '', klokkeslett: '' }
@@ -70,7 +62,6 @@ export default function form() {
 
           batch.set(statsRef, { userCount: increment }, { merge: true })
           batch.set(userRef, data)
-          // batch.set(userStatsRef, { count: 0 })
           batch
             .commit()
             .then(() => {
