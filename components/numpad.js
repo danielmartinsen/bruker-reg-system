@@ -175,7 +175,7 @@ export default function numpad() {
                     batch.set(statsRef, { count: increment }, { merge: true })
                     batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
                     batch.set(userRef, { dato: idag, klokkeslett: klokkeslett })
-                    batch.set(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })
+                    batch.update(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })
 
                     batch
                       .commit()

@@ -55,21 +55,22 @@ export default function form() {
             .collection('Brukere')
             .doc(newUserID.toString())
 
-          const userStatsRef = db
-            .collection('Kunder')
-            .doc(license)
-            .collection('Brukere')
-            .doc(newUserID.toString())
-            .collection('Innsjekk')
-            .doc('--stats--')
+          // const userStatsRef = db
+          //   .collection('Kunder')
+          //   .doc(license)
+          //   .collection('Brukere')
+          //   .doc(newUserID.toString())
+          //   .collection('Innsjekk')
+          //   .doc('--stats--')
 
           const batch = db.batch()
 
           data.innsjekk = { dato: '', klokkeslett: '' }
+          data.innsjekkCount = 0
 
           batch.set(statsRef, { userCount: increment }, { merge: true })
           batch.set(userRef, data)
-          batch.set(userStatsRef, { count: 0 })
+          // batch.set(userStatsRef, { count: 0 })
           batch
             .commit()
             .then(() => {
@@ -103,6 +104,10 @@ export default function form() {
   }
 
   function innsjekk(brukernummer) {
+    const dato = new Date()
+    const klokkeslett = dato.getHours()
+    const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
+
     db.collection('Kunder')
       .doc(license)
       .collection('Brukere')
@@ -130,26 +135,25 @@ export default function form() {
               .doc(license)
               .collection('Brukere')
               .doc(brukernummer.toString())
-              .collection('Innsjekk')
-              .doc('--stats--')
 
-            const userRef = db
+            const userRef = db.collection('Kunder').doc(license).collection('Logg').doc(idag)
+
+            const userRef2 = db
               .collection('Kunder')
               .doc(license)
               .collection('Brukere')
               .doc(brukernummer.toString())
-              .collection('Innsjekk')
-              .doc(count.toString())
-
-            const dato = new Date()
-            const klokkeslett = dato.getHours()
-            const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
             const batch = db.batch()
 
-            batch.set(statsRef, { count: increment }, { merge: true })
+            batch.update(statsRef, { innsjekkCount: increment })
             batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
-            batch.set(userRef, { dato: idag, klokkeslett: klokkeslett })
+            batch.set(
+              userRef,
+              { brukernummer: { dato: idag, klokkeslett: klokkeslett } },
+              { merge: true }
+            )
+            batch.update(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })
             batch.commit().catch((error) => {
               handleOpen(
                 `Hmmmm...`,
