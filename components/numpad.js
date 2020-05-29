@@ -202,7 +202,7 @@ export default function numpad() {
 
   return (
     <>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} disableBackdropClick>
         <DialogTitle id='alert-dialog-title'>
           <h2 className={styles.modalTitle}>{dialogData.title}</h2>
         </DialogTitle>

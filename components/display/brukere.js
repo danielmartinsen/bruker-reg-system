@@ -14,19 +14,36 @@ export default function AntallBrukere() {
 
     db.collection('Kunder')
       .doc(license)
-      .collection('Brukere')
-      .onSnapshot((querySnapshot) => {
-        querySnapshot.docChanges().forEach((change) => {
-          if (change.doc.data().stats !== true) {
-            if (change.doc.data().innsjekk.dato == idag) {
-              if (antall.indexOf(change.doc.id) !== -1) {
-              } else {
-                setAntall([...antall, change.doc.id])
-              }
+      .collection('Logg')
+      .doc(idag)
+      .onSnapshot((docSnapshot) => {
+        console.log(docSnapshot.data())
+
+        for (var bruker in docSnapshot.data()) {
+          if (docSnapshot.data()[bruker].dato == idag) {
+            if (antall.indexOf(bruker) !== -1) {
+            } else {
+              setAntall([...antall, bruker])
             }
           }
-        })
+        }
       })
+
+    // db.collection('Kunder')
+    //   .doc(license)
+    //   .collection('Brukere')
+    //   .onSnapshot((querySnapshot) => {
+    //     querySnapshot.docChanges().forEach((change) => {
+    //       if (change.doc.data().stats !== true) {
+    //         if (change.doc.data().innsjekk.dato == idag) {
+    //           if (antall.indexOf(change.doc.id) !== -1) {
+    //           } else {
+    //             setAntall([...antall, change.doc.id])
+    //           }
+    //         }
+    //       }
+    //     })
+    //   })
   })
 
   return (
