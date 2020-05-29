@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import AntallBrukere from '../../components/display/brukere'
 import Jobber from '../../components/display/jobber'
 import BrukerStats from '../../components/display/stats'
