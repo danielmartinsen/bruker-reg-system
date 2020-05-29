@@ -33,11 +33,6 @@ export default function AntallBrukere() {
     <div className={styles.infoBox}>
       <h3>Antall besøk i dag:</h3>
       <h1>{antall.length}</h1>
-      <p>
-        {antall.map((id) => {
-          return <p>{id}</p>
-        })}
-      </p>
     </div>
   )
 }
