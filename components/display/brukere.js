@@ -7,20 +7,42 @@ export default function AntallBrukere() {
   const db = firebase.firestore()
   const [antall, setAntall] = useState([])
 
-  useEffect(() => {
-    const license = localStorage.getItem('LicenseKey')
-    const dato = new Date()
-    const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
+  const dato = new Date()
+  const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
+  var license = ''
+  useEffect(() => {
+    license = localStorage.getItem('LicenseKey')
+
+    const update = setInterval(() => {
+      db.collection('Kunder')
+        .doc(license)
+        .collection('Logg')
+        .doc(idag)
+        .get()
+        .then((doc) => {
+          var antallBrukere = 0
+          for (var bruker in doc.data()) {
+            if (doc.data()[bruker].dato == idag) {
+              antallBrukere++
+              setAntall(antallBrukere)
+            }
+          }
+        })
+    }, 1000)
+    return () => clearInterval(update)
+  }, [])
+
+  function update() {
+    console.log('Kjører nå')
     db.collection('Kunder')
       .doc(license)
       .collection('Logg')
       .doc(idag)
-      .onSnapshot((docSnapshot) => {
-        console.log(docSnapshot.data())
-
-        for (var bruker in docSnapshot.data()) {
-          if (docSnapshot.data()[bruker].dato == idag) {
+      .get()
+      .then((doc) => {
+        for (var bruker in doc.data()) {
+          if (doc.data()[bruker].dato == idag) {
             if (antall.indexOf(bruker) !== -1) {
             } else {
               setAntall([...antall, bruker])
@@ -28,28 +50,12 @@ export default function AntallBrukere() {
           }
         }
       })
-
-    // db.collection('Kunder')
-    //   .doc(license)
-    //   .collection('Brukere')
-    //   .onSnapshot((querySnapshot) => {
-    //     querySnapshot.docChanges().forEach((change) => {
-    //       if (change.doc.data().stats !== true) {
-    //         if (change.doc.data().innsjekk.dato == idag) {
-    //           if (antall.indexOf(change.doc.id) !== -1) {
-    //           } else {
-    //             setAntall([...antall, change.doc.id])
-    //           }
-    //         }
-    //       }
-    //     })
-    //   })
-  })
+  }
 
   return (
     <div className={styles.infoBox}>
       <h3>Antall besøk i dag:</h3>
-      <h1>{antall.length}</h1>
+      <h1>{antall}</h1>
     </div>
   )
 }
