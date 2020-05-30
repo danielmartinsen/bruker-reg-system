@@ -6,7 +6,6 @@ $beige: #ecbfa0;
 
 html,
 body {
-  height: 100%;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
@@ -17,4 +16,9 @@ body {
   background-color: $dark;
   color: $white;
   user-select: none;
+}
+
+.container {
+  max-width: 60rem;
+  margin: 1.5rem auto;
 }

@@ -1,0 +1,37 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.buttongroup {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+
+  button {
+    padding: 12px;
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+
+    background-color: $dark;
+    color: $white;
+    font-size: 20px;
+    font-weight: bold;
+
+    &:hover {
+      background-color: $red;
+      color: $dark;
+      cursor: pointer;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  max-width: 60rem;
+  margin: 1.5rem auto;
+}
