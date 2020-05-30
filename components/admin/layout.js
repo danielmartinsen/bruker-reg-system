@@ -7,12 +7,12 @@ import Router from 'next/router'
 const siteTitle = 'Administrasjonspanel'
 
 export default function Layout({ children }) {
-  const [login, setLogin] = useState(false)
+  const [login, setLogin] = useState()
 
   useEffect(() => {
     setLogin(localStorage.getItem('Login'))
 
-    if (!login || login == 'false') {
+    if (login === null || login == 'false') {
       Router.push('/admin/login')
     }
   })
