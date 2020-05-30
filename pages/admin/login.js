@@ -14,12 +14,14 @@ export default function Login() {
   const [password, setPassword] = useState('')
 
   useEffect(() => {
-    setLicense(localStorage.getItem('LicenseKey'))
-
     if (localStorage.getItem('Login') == 'true') {
       Router.push('/admin')
     }
   })
+
+  useEffect(() => {
+    setLicense(localStorage.getItem('LicenseKey'))
+  }, [])
 
   function userLogin() {
     if (license != '' && username != '' && password != '') {
@@ -68,9 +70,9 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button onClick={() => userLogin()}>Logg inn</button>
-      </div>
 
-      <p>{feedback}</p>
+        <p>{feedback}</p>
+      </div>
 
       <style jsx global>
         {`

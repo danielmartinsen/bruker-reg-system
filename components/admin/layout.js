@@ -12,7 +12,7 @@ export default function Layout({ children }) {
   useEffect(() => {
     setLogin(localStorage.getItem('Login'))
 
-    if (login == 'false') {
+    if (!login || login == 'false') {
       Router.push('/admin/login')
     }
   })
