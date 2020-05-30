@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from 'react'
 export default function AntallBrukere() {
   const firebase = loadFirebase()
   const db = firebase.firestore()
-  const [antall, setAntall] = useState([])
+  const [antall, setAntall] = useState(0)
 
   const dato = new Date()
   const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
