@@ -9,6 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
+import Router from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -123,94 +124,98 @@ export default function Home() {
   useEffect(() => {
     const license = localStorage.getItem('LicenseKey')
 
-    db.collection('Kunder')
-      .doc(license)
-      .collection('Logg')
-      .doc(idag)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          var number = 0
-          for (var user in doc.data()) {
-            number++
-          }
-          setIdagBesokstall(number)
-        }
-      })
-
-    db.collection('Kunder')
-      .doc(license)
-      .collection('Brukere')
-      .doc('--stats--')
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setTotaltBesokstall(doc.data().innsjekkCount)
-          setTotaltUnikeBrukere(doc.data().userCount)
-        }
-      })
-
-    db.collection('Kunder')
-      .doc(license)
-      .collection('Logg')
-      .get()
-      .then((snapshot) => {
-        if (!snapshot.empty) {
-          var number1 = 0
-          var number2 = 0
-          var number3 = 0
-
-          var klokkeslett = []
-          var users = []
-
-          var kjonnGutt = 0
-          var kjonnJente = 0
-          var kjonnAnnet = 0
-
-          snapshot.forEach((doc) => {
-            if (!doc.data().stats == true) {
-              number1++
-
-              for (var user in doc.data()) {
-                klokkeslett.push(doc.data()[user].klokkeslett)
-
-                if (doc.data()[user].kjonn == 'Gutt') {
-                  kjonnGutt++
-                } else if (doc.data()[user].kjonn == 'Jente') {
-                  kjonnJente++
-                } else if (doc.data()[user].kjonn == 'Annet') {
-                  kjonnAnnet++
-                }
-              }
+    if (!license) {
+      Router.push('/admin/login')
+    } else {
+      db.collection('Kunder')
+        .doc(license)
+        .collection('Logg')
+        .doc(idag)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            var number = 0
+            for (var user in doc.data()) {
+              number++
             }
-          })
-          setTotaltDagerAapent(number1)
+            setIdagBesokstall(number)
+          }
+        })
 
-          snapshot.forEach((doc) => {
-            if (!doc.data().stats == true) {
-              const docID = doc.id.split('-')
-              if (docID[1] == month) {
-                number2++
+      db.collection('Kunder')
+        .doc(license)
+        .collection('Brukere')
+        .doc('--stats--')
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            setTotaltBesokstall(doc.data().innsjekkCount)
+            setTotaltUnikeBrukere(doc.data().userCount)
+          }
+        })
+
+      db.collection('Kunder')
+        .doc(license)
+        .collection('Logg')
+        .get()
+        .then((snapshot) => {
+          if (!snapshot.empty) {
+            var number1 = 0
+            var number2 = 0
+            var number3 = 0
+
+            var klokkeslett = []
+            var users = []
+
+            var kjonnGutt = 0
+            var kjonnJente = 0
+            var kjonnAnnet = 0
+
+            snapshot.forEach((doc) => {
+              if (!doc.data().stats == true) {
+                number1++
 
                 for (var user in doc.data()) {
-                  number3++
-                  users.push(user)
+                  klokkeslett.push(doc.data()[user].klokkeslett)
+
+                  if (doc.data()[user].kjonn == 'Gutt') {
+                    kjonnGutt++
+                  } else if (doc.data()[user].kjonn == 'Jente') {
+                    kjonnJente++
+                  } else if (doc.data()[user].kjonn == 'Annet') {
+                    kjonnAnnet++
+                  }
                 }
-                setMndBesokstall(number3)
               }
-            }
-          })
-          setTotalPopTidspunktMest(findMostFrequent(klokkeslett))
-          setTotalPopTidspunktMinst(findLeastFrequent(klokkeslett))
+            })
+            setTotaltDagerAapent(number1)
 
-          setMndUnikeBrukere(users.filter((item, index) => users.indexOf(item) === index).length)
-          setMndDagerAapent(number2)
+            snapshot.forEach((doc) => {
+              if (!doc.data().stats == true) {
+                const docID = doc.id.split('-')
+                if (docID[1] == month) {
+                  number2++
 
-          setTotaltAnnet(kjonnAnnet)
-          setTotaltGutter(kjonnGutt)
-          setTotaltJenter(kjonnJente)
-        }
-      })
+                  for (var user in doc.data()) {
+                    number3++
+                    users.push(user)
+                  }
+                  setMndBesokstall(number3)
+                }
+              }
+            })
+            setTotalPopTidspunktMest(findMostFrequent(klokkeslett))
+            setTotalPopTidspunktMinst(findLeastFrequent(klokkeslett))
+
+            setMndUnikeBrukere(users.filter((item, index) => users.indexOf(item) === index).length)
+            setMndDagerAapent(number2)
+
+            setTotaltAnnet(kjonnAnnet)
+            setTotaltGutter(kjonnGutt)
+            setTotaltJenter(kjonnJente)
+          }
+        })
+    }
   }, [])
 
   return (
