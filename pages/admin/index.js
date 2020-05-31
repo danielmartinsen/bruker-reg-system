@@ -4,13 +4,67 @@ import Layout from '../../components/admin/layout'
 import StatsBox from '../../components/admin/statsBox'
 import { loadFirebase } from '../../lib/firebase'
 
+import { makeStyles } from '@material-ui/core/styles'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+}))
+
 export default function Home() {
   const firebase = loadFirebase()
   const db = firebase.firestore()
 
   const dato = new Date()
   const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
-  const mnd = dato.getMonth() + 1
+
+  const [month, setMonth] = useState(dato.getMonth() + 1)
+
+  const handleChange = (event) => {
+    setMonth(event.target.value)
+    const license = localStorage.getItem('LicenseKey')
+
+    db.collection('Kunder')
+      .doc(license)
+      .collection('Logg')
+      .get()
+      .then((snapshot) => {
+        if (!snapshot.empty) {
+          var number2 = 0
+          var number3 = 0
+
+          var users = []
+
+          snapshot.forEach((doc) => {
+            if (!doc.data().stats == true) {
+              const docID = doc.id.split('-')
+
+              if (docID[1] == event.target.value) {
+                number2++
+
+                for (var user in doc.data()) {
+                  number3++
+                  users.push(user)
+                }
+                setMndBesokstall(number3)
+              } else {
+                setMndBesokstall(0)
+                setMndDagerAapent(0)
+              }
+            }
+          })
+
+          setMndUnikeBrukere(users.filter((item, index) => users.indexOf(item) === index).length)
+          setMndDagerAapent(number2)
+        }
+      })
+  }
 
   const [idagBesokstall, setIdagBesokstall] = useState(0)
 
@@ -135,7 +189,7 @@ export default function Home() {
           snapshot.forEach((doc) => {
             if (!doc.data().stats == true) {
               const docID = doc.id.split('-')
-              if (docID[1] == mnd) {
+              if (docID[1] == month) {
                 number2++
 
                 for (var user in doc.data()) {
@@ -165,12 +219,36 @@ export default function Home() {
       <StatsBox title='Besøkstall' info={idagBesokstall} color='92D7E0' />
       <StatsBox title='Dagens melding' info='input' color='92D7E0' />
 
-      <p className={styles.sectionTitle}>Denne måneden</p>
+      <p className={styles.sectionTitle} style={{ marginBottom: 0 }}>
+        Måneden
+      </p>
+      <FormControl className={styles.selectForm}>
+        <Select
+          labelId='demo-simple-select-label'
+          id='demo-simple-select'
+          value={month}
+          onChange={handleChange}
+          disableUnderline>
+          <MenuItem value={1}>Januar</MenuItem>
+          <MenuItem value={2}>Februar</MenuItem>
+          <MenuItem value={3}>Mars</MenuItem>
+          <MenuItem value={4}>April</MenuItem>
+          <MenuItem value={5}>Mai</MenuItem>
+          <MenuItem value={6}>Juni</MenuItem>
+          <MenuItem value={7}>Juli</MenuItem>
+          <MenuItem value={8}>August</MenuItem>
+          <MenuItem value={9}>September</MenuItem>
+          <MenuItem value={10}>Oktober</MenuItem>
+          <MenuItem value={11}>November</MenuItem>
+          <MenuItem value={12}>Desember</MenuItem>
+        </Select>
+      </FormControl>
+
       <StatsBox title='Besøkstall' info={mndBesokstall} color='FDBFBD' />
       <StatsBox title='Unike brukere' info={mndUnikeBrukere} color='FDBFBD' />
       <StatsBox
         title='Gjennomsnittlig besøk'
-        info={mndBesokstall / mndDagerAapent}
+        info={mndBesokstall != 0 || mndDagerAapent != 0 ? mndBesokstall / mndDagerAapent : 0}
         color='FDBFBD'
       />
 
