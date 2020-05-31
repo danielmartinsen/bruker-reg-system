@@ -262,7 +262,7 @@ export default function Home() {
       <StatsBox title='Unike brukere' info={totaltUnikeBrukere} color='C7F0BC' />
       <StatsBox
         title='Gjennomsnittlig besøk'
-        info={(totaltBesokstall / totaltDagerAapent).toFixed(1)}
+        info={(totaltBesokstall / totaltDagerAapent).toFixed(0)}
         color='C7F0BC'
       />
 

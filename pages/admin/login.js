@@ -30,7 +30,10 @@ export default function Login() {
         .get()
         .then((doc) => {
           if (doc.exists) {
-            if (doc.data().login.brukernavn == username && doc.data().login.passord == password) {
+            if (
+              doc.data().login.brukernavn.toLowerCase() == username.toLowerCase() &&
+              doc.data().login.passord == password
+            ) {
               localStorage.setItem('LicenseKey', license)
               localStorage.setItem('Login', true)
               Router.push('/admin')
