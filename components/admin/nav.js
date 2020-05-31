@@ -14,7 +14,7 @@ export default function Nav() {
       <h1>Administrasjonspanel</h1>
 
       <div className={styles.buttongroup}>
-        <Link href='/admin/'>
+        <Link href='/admin'>
           <button>Dashboard</button>
         </Link>
         <Link href='/admin/brukere'>
