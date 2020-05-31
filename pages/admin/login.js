@@ -31,6 +31,7 @@ export default function Login() {
         .then((doc) => {
           if (doc.exists) {
             if (doc.data().login.brukernavn == username && doc.data().login.passord == password) {
+              localStorage.setItem('LicenseKey', license)
               localStorage.setItem('Login', true)
               Router.push('/admin')
             } else {
@@ -46,7 +47,7 @@ export default function Login() {
   }
 
   return (
-    <div className='container'>
+    <div>
       <div className={styles.loginForm}>
         <h1>Logg inn</h1>
 

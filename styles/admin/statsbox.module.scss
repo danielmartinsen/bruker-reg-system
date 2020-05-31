@@ -1,0 +1,53 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.box {
+  flex: 1 0 21%;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 20px;
+  background-color: $green;
+
+  p {
+    line-height: 0.5;
+    font-size: 22px;
+  }
+
+  h1 {
+    line-height: 1;
+    font-size: 38px;
+  }
+}
+
+.input {
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid $dark;
+  padding: 5px 0px;
+  margin: 0;
+  outline: none;
+  font-size: 18px;
+  width: 73%;
+
+  &::placeholder {
+    color: #4a4f62;
+  }
+}
+
+.button {
+  height: 34px;
+  margin-left: 10px;
+  outline: none;
+  border: 2px solid $dark;
+  background-color: transparent;
+  padding: 0px 20px;
+
+  &:hover {
+    background-color: $dark;
+    color: $white;
+    cursor: pointer;
+  }
+}

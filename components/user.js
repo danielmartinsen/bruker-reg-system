@@ -83,7 +83,9 @@ export default function bruker({ navn, brukernummer }) {
               batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
               batch.set(
                 userRef,
-                { [brukernummer]: { dato: idag, klokkeslett: klokkeslett } },
+                {
+                  [brukernummer]: { dato: idag, klokkeslett: klokkeslett, kjonn: doc.data().kjonn },
+                },
                 { merge: true }
               )
               batch.update(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })

@@ -70,7 +70,7 @@ export default function form() {
                 `Du er nå registrert og sjekket inn. Brukernummeret ditt er ${newUserID}. Dette trenger du neste gang du sjekker inn.`
               )
 
-              innsjekk(newUserID)
+              innsjekk(newUserID, data.kjonn)
 
               setTimeout(() => {
                 Router.push('/')
@@ -94,7 +94,7 @@ export default function form() {
     }
   }
 
-  function innsjekk(brukernummer) {
+  function innsjekk(brukernummer, kjonn) {
     const dato = new Date()
     const klokkeslett = dato.getHours()
     const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
@@ -139,7 +139,7 @@ export default function form() {
             batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
             batch.set(
               userRef,
-              { [brukernummer]: { dato: idag, klokkeslett: klokkeslett } },
+              { [brukernummer]: { dato: idag, klokkeslett: klokkeslett, kjonn: kjonn } },
               { merge: true }
             )
             batch.update(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })
