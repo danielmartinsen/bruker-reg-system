@@ -1,0 +1,25 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.box {
+  flex: 1 0 40%;
+  padding: 0px 20px;
+  margin: 10px;
+  border-radius: 20px;
+  background-color: #c7f0bc;
+
+  h1 {
+    font-size: 26px;
+  }
+
+  img {
+    vertical-align: middle;
+    border-radius: 50%;
+    margin-right: 20px;
+    height: 90px;
+    width: 90px;
+  }
+}

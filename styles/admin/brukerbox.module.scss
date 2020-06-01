@@ -1,0 +1,46 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.box {
+  flex: 1 0 40%;
+  padding: 0px 20px;
+  margin: 10px;
+  border-radius: 20px;
+  background-color: #92d7e0;
+
+  h1 {
+    font-size: 26px;
+    line-height: 1;
+    margin: 20px 0px 10px 0px;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 0.5;
+  }
+}
+
+.column {
+  display: inline-block;
+
+  button {
+    margin: 15px 5px;
+    padding: 5px 10px;
+    outline: none;
+    border: 2px solid $dark;
+
+    background-color: transparent;
+    color: $dark;
+    font-size: 12px;
+    font-weight: bold;
+
+    &:hover {
+      background-color: $dark;
+      color: $white;
+      cursor: pointer;
+    }
+  }
+}

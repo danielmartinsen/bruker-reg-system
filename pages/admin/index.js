@@ -1,22 +1,13 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../../styles/admin/index.module.scss'
 import Layout from '../../components/admin/layout'
 import StatsBox from '../../components/admin/statsBox'
 import { loadFirebase } from '../../lib/firebase'
 
-import { makeStyles } from '@material-ui/core/styles'
-import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import Router from 'next/router'
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-}))
 
 export default function Home() {
   const firebase = loadFirebase()

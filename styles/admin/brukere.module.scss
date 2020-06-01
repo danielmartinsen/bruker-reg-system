@@ -1,0 +1,24 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.addBtn {
+  margin: 10px;
+  padding: 12px;
+  outline: none;
+  border: 2px solid $dark;
+  border-radius: 5px;
+
+  background-color: transparent;
+  color: $dark;
+  font-size: 16px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: $dark;
+    color: $white;
+    cursor: pointer;
+  }
+}
