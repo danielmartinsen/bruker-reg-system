@@ -18,46 +18,6 @@ export default function Home() {
 
   const [month, setMonth] = useState(dato.getMonth() + 1)
 
-  const handleChange = (event) => {
-    setMonth(event.target.value)
-    const license = localStorage.getItem('LicenseKey')
-
-    db.collection('Kunder')
-      .doc(license)
-      .collection('Logg')
-      .get()
-      .then((snapshot) => {
-        if (!snapshot.empty) {
-          var number2 = 0
-          var number3 = 0
-
-          var users = []
-
-          snapshot.forEach((doc) => {
-            if (!doc.data().stats == true) {
-              const docID = doc.id.split('-')
-
-              if (docID[1] == month) {
-                number2++
-
-                for (var user in doc.data()) {
-                  number3++
-                  users.push(user)
-                }
-                setMndBesokstall(number3)
-              } else {
-                setMndBesokstall(0)
-                setMndDagerAapent(0)
-              }
-            }
-          })
-
-          setMndUnikeBrukere(users.filter((item, index) => users.indexOf(item) === index).length)
-          setMndDagerAapent(number2)
-        }
-      })
-  }
-
   const [idagBesokstall, setIdagBesokstall] = useState(0)
 
   const [mndUnikeBrukere, setMndUnikeBrukere] = useState(0)
@@ -74,6 +34,46 @@ export default function Home() {
 
   const [totalPopTidspunktMest, setTotalPopTidspunktMest] = useState(0)
   const [totalPopTidspunktMinst, setTotalPopTidspunktMinst] = useState(0)
+
+  function handleChange(event) {
+    setMonth(event.target.value)
+    const license = localStorage.getItem('LicenseKey')
+
+    db.collection('Kunder')
+      .doc(license)
+      .collection('Logg')
+      .get()
+      .then((snapshot) => {
+        if (!snapshot.empty) {
+          var countDagerApent = 0
+          var countBesok = 0
+          var countResult = 0
+          var users = []
+
+          snapshot.forEach((doc) => {
+            if (!doc.data().stats == true) {
+              const docID = doc.id.split('-')
+
+              if (docID[1] == event.target.value) {
+                countResult++
+                countDagerApent++
+                for (var user in doc.data()) {
+                  countBesok++
+                  users.push(user)
+                }
+                setMndBesokstall(countBesok)
+              } else if (countResult == 0) {
+                setMndBesokstall(0)
+                setMndDagerAapent(0)
+              }
+            }
+          })
+
+          setMndUnikeBrukere(users.filter((item, index) => users.indexOf(item) === index).length)
+          setMndDagerAapent(countDagerApent)
+        }
+      })
+  }
 
   function findMostFrequent(array) {
     if (array.length == 0) return null
