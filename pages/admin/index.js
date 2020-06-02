@@ -37,7 +37,7 @@ export default function Home() {
             if (!doc.data().stats == true) {
               const docID = doc.id.split('-')
 
-              if (docID[1] == event.target.value) {
+              if (docID[1] == month) {
                 number2++
 
                 for (var user in doc.data()) {
