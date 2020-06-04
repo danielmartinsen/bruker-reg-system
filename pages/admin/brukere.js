@@ -6,6 +6,8 @@ import MaterialTable, { MTableToolbar } from 'material-table'
 import SearchIcon from '@material-ui/icons/Search'
 import ClearIcon from '@material-ui/icons/Clear'
 import ArrowIcon from '@material-ui/icons/ArrowDropDown'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 export default function Brukere() {
   const firebase = loadFirebase()
@@ -40,6 +42,7 @@ export default function Brukere() {
               bursdag: datoReadable,
               kjonn: doc.data().kjonn,
               telefon: doc.data().telefon,
+              actions: [<EditIcon />, <DeleteIcon />],
             })
           }
         })
@@ -53,11 +56,12 @@ export default function Brukere() {
         title='Brukere'
         style={{ width: '100%' }}
         columns={[
-          { title: 'Navn', field: 'navn', cellStyle: { width: '25%' } },
-          { title: 'Brukernummer', field: 'id', cellStyle: { width: '5%' } },
-          { title: 'Kjønn', field: 'kjonn', cellStyle: { width: '5%' } },
-          { title: 'Bursdag', field: 'bursdag', cellStyle: { width: '20%' } },
-          { title: 'Telefon', field: 'telefon', cellStyle: { width: '20%' } },
+          { title: 'Navn', field: 'navn' },
+          { title: 'Brukernummer', field: 'id' },
+          { title: 'Kjønn', field: 'kjonn' },
+          { title: 'Bursdag', field: 'bursdag' },
+          { title: 'Telefon', field: 'telefon' },
+          { title: '', field: 'actions', cellStyle: { textAlign: 'right' } },
         ]}
         data={brukere}
         options={{
@@ -65,12 +69,17 @@ export default function Brukere() {
           searchFieldAlignment: 'left',
           showTitle: false,
           paging: false,
-          headerStyle: { backgroundColor: '#f1f2fa', fontWeight: 'bold' },
+          headerStyle: { backgroundColor: '#f1f2fa', fontWeight: 'bold', padding: '5px 16px' },
+          searchFieldStyle: { border: '2px solid #0F152D', padding: 3 },
         }}
         icons={{
           Search: () => <SearchIcon />,
           ResetSearch: () => <ClearIcon />,
-          SortArrow: () => <ArrowIcon />,
+          SortArrow: (props) => (
+            <span {...props}>
+              <ArrowIcon />
+            </span>
+          ),
         }}
         localization={{
           toolbar: { searchPlaceholder: 'Søk' },

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from '../../styles/admin/login.module.scss'
 import Router from 'next/router'
 import { loadFirebase } from '../../lib/firebase'
