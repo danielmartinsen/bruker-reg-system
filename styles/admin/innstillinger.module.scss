@@ -1,0 +1,42 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.buttonDiv {
+  margin-top: 50px;
+
+  button {
+    margin-right: 15px;
+    padding: 5px 10px;
+    outline: none;
+    border: 2px solid $dark;
+
+    background-color: transparent;
+    color: $dark;
+    font-size: 16px;
+    font-weight: bold;
+
+    &:hover {
+      background-color: $dark;
+      color: $white;
+      cursor: pointer;
+    }
+  }
+}
+
+.infoDiv {
+  display: inline-block;
+  min-width: 350px;
+  margin-right: 40px;
+
+  p {
+    line-height: 1;
+  }
+}
+
+.infoDivLogo {
+  display: inline-block;
+  min-width: 200px;
+}

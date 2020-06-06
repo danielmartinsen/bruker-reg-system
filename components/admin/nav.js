@@ -11,7 +11,7 @@ export default function Nav() {
 
   return (
     <div className={styles.header}>
-      <h1>Administrasjonspanel</h1>
+      <h1>Administrasjon</h1>
 
       <div className={styles.buttongroup}>
         <Link href='/admin'>
@@ -24,7 +24,10 @@ export default function Nav() {
           <button>Ansatte</button>
         </Link>
         <Link href='/admin/logg'>
-          <button>Besøkslogg</button>
+          <button>Logg</button>
+        </Link>
+        <Link href='/admin/innstillinger'>
+          <button>Innstillinger</button>
         </Link>
         <button onClick={() => logout()}>Logg ut</button>
       </div>
