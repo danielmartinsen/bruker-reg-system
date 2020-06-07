@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import styles from '../../styles/admin/nav.module.scss'
 import Router from 'next/router'
+import styles from '../../styles/admin/nav.module.scss'
 
 export default function Nav() {
   function logout() {

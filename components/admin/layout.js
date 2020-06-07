@@ -1,10 +1,9 @@
+import { useState, useEffect } from 'react'
+import Router from 'next/router'
 import Head from 'next/head'
 import Nav from './nav'
 
-import { useState, useEffect } from 'react'
-import Router from 'next/router'
-
-const siteTitle = 'Administrasjonspanel'
+const siteTitle = 'U-reg Admin'
 
 export default function Layout({ children }) {
   const [login, setLogin] = useState()
