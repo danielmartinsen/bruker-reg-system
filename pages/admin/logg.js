@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { loadFirebase } from '../../lib/firebase'
 
 import Layout from '../../components/admin/layout'
-import Bruker from '../../components/admin/loggBox'
 import styles from '../../styles/admin/logg.module.scss'
 
 import DateFnsUtils from '@date-io/date-fns'
@@ -15,11 +14,18 @@ export default function Logg() {
   const [dato, setDato] = useState(new Date())
   const [brukere, setBrukere] = useState([])
 
-  const handleDateChange = (date) => setDato(date)
-
   useEffect(() => {
+    loadLogg(dato)
+  }, [])
+
+  function changeDate(date) {
+    setDato(date)
+    loadLogg(date)
+  }
+
+  function loadLogg(date) {
     const license = localStorage.getItem('LicenseKey')
-    const valgtDato = dato.getDate() + '-' + `${dato.getMonth() + 1}` + '-' + dato.getFullYear()
+    const valgtDato = date.getDate() + '-' + `${date.getMonth() + 1}` + '-' + date.getFullYear()
 
     db.collection('Kunder')
       .doc(license)
@@ -38,19 +44,45 @@ export default function Logg() {
             .doc(bruker)
             .get()
             .then((userdoc) => {
-              setBrukere((brukere) => [
-                ...brukere,
-                <Bruker
-                  navn={userdoc.data().fornavn + ' ' + userdoc.data().etternavn}
-                  id={bruker}
-                  klokkeslett={doc.data()[bruker].klokkeslett}
-                  key={bruker}
-                />,
-              ])
+              if (userdoc.exists) {
+                setBrukere((brukere) => [
+                  ...brukere,
+                  <div className={styles.box} key={bruker}>
+                    <div className={styles.column}>
+                      <h1>
+                        {userdoc.data().fornavn + ' ' + userdoc.data().etternavn} ({bruker})
+                      </h1>
+                      <p>Sjeket inn ca. klokka {doc.data()[bruker].klokkeslett}</p>
+                    </div>
+                    <div className={styles.column}>
+                      <button onClick={() => deleteUserLogg(bruker)}>Slett</button>
+                    </div>
+                  </div>,
+                ])
+              } else {
+                setBrukere((brukere) => [
+                  ...brukere,
+                  <div className={styles.box} key={bruker}>
+                    <div className={styles.column}>
+                      <h1>Slettet bruker ({bruker})</h1>
+                      <p>Sjeket inn ca. klokka {doc.data()[bruker].klokkeslett}</p>
+                    </div>
+                    <div className={styles.column}>
+                      <button onClick={() => deleteUserLogg(bruker)}>Slett</button>
+                    </div>
+                  </div>,
+                ])
+              }
             })
         }
       })
-  }, [dato])
+  }
+
+  function deleteUserLogg(userid) {
+    if (confirm('Sikker på at du vil slette besøket?')) {
+      loadLogg(dato)
+    }
+  }
 
   return (
     <Layout>
@@ -63,7 +95,7 @@ export default function Logg() {
           margin='normal'
           style={{ marginLeft: 10 }}
           value={dato}
-          onChange={handleDateChange}
+          onChange={(e) => changeDate(e)}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}

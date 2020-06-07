@@ -3,7 +3,6 @@ import { loadFirebase } from '../../lib/firebase'
 
 import styles from '../../styles/admin/ansatte.module.scss'
 import Layout from '../../components/admin/layout'
-import Ansatt from '../../components/admin/ansattBox'
 
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -24,10 +23,9 @@ export default function Ansatte() {
   const [feedback, setFeedback] = useState('')
 
   const increment = firebase.firestore.FieldValue.increment(1)
+  const decrement = firebase.firestore.FieldValue.increment(-1)
 
-  var license
   useEffect(() => {
-    license = localStorage.getItem('LicenseKey')
     loadAnsatte()
   }, [])
 
@@ -85,6 +83,22 @@ export default function Ansatte() {
     }
   }
 
+  function deleteAnsatt(id) {
+    const license = localStorage.getItem('LicenseKey')
+    const userRef = db.collection('Kunder').doc(license).collection('Ansatte').doc(id.toString())
+    const statsRef = db.collection('Kunder').doc(license).collection('Ansatte').doc('--stats--')
+    const batch = db.batch()
+
+    batch.delete(userRef)
+    batch.set(statsRef, { count: decrement }, { merge: true })
+
+    if (confirm('Sikker på at du vil slette brukeren?')) {
+      batch.commit().then(() => {
+        loadAnsatte()
+      })
+    }
+  }
+
   return (
     <Layout>
       <Dialog open={open} onClose={handleClose}>
@@ -134,7 +148,19 @@ export default function Ansatte() {
       <div className={styles.break} />
 
       {ansatte.map((ansatt) => {
-        return <Ansatt navn={ansatt.navn} nummer={ansatt.id} bilde={ansatt.bilde} />
+        return (
+          <div className={styles.box} key={ansatt.id}>
+            <div className={styles.imgBox}>
+              <img src={ansatt.bilde} />
+            </div>
+            <div>
+              <h1>
+                {ansatt.navn} ({ansatt.id})
+              </h1>
+              <button onClick={() => deleteAnsatt(ansatt.id)}>Slett</button>
+            </div>
+          </div>
+        )
       })}
     </Layout>
   )

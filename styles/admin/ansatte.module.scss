@@ -71,3 +71,46 @@ $beige: #ecbfa0;
     cursor: pointer;
   }
 }
+
+.box {
+  flex: 1 0 40%;
+  padding: 0px 20px;
+  margin: 10px;
+  height: 120px;
+  border-radius: 20px;
+  background-color: #c7f0bc;
+
+  div {
+    height: 120px;
+    display: inline-block;
+  }
+
+  button {
+    font-size: 18px;
+    color: $dark;
+    padding: 0px;
+
+    border: none;
+    border-bottom: 2px dotted;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+  }
+
+  h1 {
+    font-size: 26px;
+    line-height: 1;
+    margin: 20px 0px 10px 0px;
+  }
+
+  img {
+    border-radius: 50%;
+    margin-right: 20px;
+    height: 90px;
+    width: 90px;
+  }
+}
+
+.imgBox {
+  vertical-align: middle;
+}

@@ -1,4 +1,59 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
 .break {
   flex-basis: 100%;
   height: 20px;
+}
+
+.box {
+  flex: 1 0 40%;
+  padding: 0px 20px;
+  margin: 10px;
+  border-radius: 20px;
+  background-color: #92d7e0;
+
+  h1 {
+    font-size: 26px;
+    line-height: 1;
+    margin: 20px 0px 10px 0px;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 0.5;
+  }
+
+  button {
+    font-size: 18px;
+    color: $dark;
+    padding: 0px;
+
+    border: none;
+    border-bottom: 2px dotted;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+  }
+}
+
+.column {
+  width: 50%;
+  display: inline-block;
+
+  button {
+    float: right;
+    font-size: 18px;
+    color: $dark;
+    padding: 0px;
+
+    border: none;
+    border-bottom: 2px dotted;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+  }
 }

@@ -1,0 +1,58 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.icon {
+  color: $dark;
+  padding-left: 10px;
+
+  &:hover {
+    color: $red;
+    cursor: pointer;
+  }
+}
+
+.modalText {
+  margin: 0;
+  font-size: 1.5rem;
+
+  b {
+    color: $dark;
+  }
+}
+.modalTitle {
+  color: $dark;
+  margin: 0;
+  font-size: 2rem;
+}
+
+.editInput {
+  width: 95%;
+  margin: 10px 0px;
+  padding: 10px;
+  outline: none;
+
+  font-size: 18px;
+  border: 2px solid $dark;
+  color: $dark;
+}
+
+.editButton {
+  margin: 10px 0px;
+  padding: 10px 15px;
+  outline: none;
+  border: 2px solid $dark;
+
+  background-color: transparent;
+  color: $dark;
+  font-size: 16px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: $dark;
+    color: $white;
+    cursor: pointer;
+  }
+}
