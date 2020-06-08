@@ -55,7 +55,7 @@ export default function Logg() {
                       </h1>
                       <p>Sjeket inn ca. klokka {doc.data()[bruker].klokkeslett}</p>
                     </div>
-                    <div className={styles.column}>
+                    <div className={styles.delColumn}>
                       <button onClick={() => deleteUserLogg(bruker, valgtDato)}>Slett</button>
                     </div>
                   </div>,
@@ -68,7 +68,7 @@ export default function Logg() {
                       <h1>Slettet bruker ({bruker})</h1>
                       <p>Sjeket inn ca. klokka {doc.data()[bruker].klokkeslett}</p>
                     </div>
-                    <div className={styles.column}>
+                    <div className={styles.delColumn}>
                       <button onClick={() => deleteUserLogg(bruker, valgtDato)}>Slett</button>
                     </div>
                   </div>,

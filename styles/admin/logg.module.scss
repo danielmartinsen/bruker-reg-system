@@ -41,7 +41,25 @@ $beige: #ecbfa0;
 }
 
 .column {
-  width: 50%;
+  width: 80%;
+  display: inline-block;
+
+  button {
+    float: right;
+    font-size: 18px;
+    color: $dark;
+    padding: 0px;
+
+    border: none;
+    border-bottom: 2px dotted;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+  }
+}
+
+.delColumn {
+  width: 20%;
   display: inline-block;
 
   button {
