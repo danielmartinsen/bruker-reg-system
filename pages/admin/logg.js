@@ -10,6 +10,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 export default function Logg() {
   const firebase = loadFirebase()
   const db = firebase.firestore()
+  const decrement = firebase.firestore.FieldValue.increment(-1)
 
   const [dato, setDato] = useState(new Date())
   const [brukere, setBrukere] = useState([])
@@ -55,7 +56,7 @@ export default function Logg() {
                       <p>Sjeket inn ca. klokka {doc.data()[bruker].klokkeslett}</p>
                     </div>
                     <div className={styles.column}>
-                      <button onClick={() => deleteUserLogg(bruker)}>Slett</button>
+                      <button onClick={() => deleteUserLogg(bruker, valgtDato)}>Slett</button>
                     </div>
                   </div>,
                 ])
@@ -68,7 +69,7 @@ export default function Logg() {
                       <p>Sjeket inn ca. klokka {doc.data()[bruker].klokkeslett}</p>
                     </div>
                     <div className={styles.column}>
-                      <button onClick={() => deleteUserLogg(bruker)}>Slett</button>
+                      <button onClick={() => deleteUserLogg(bruker, valgtDato)}>Slett</button>
                     </div>
                   </div>,
                 ])
@@ -78,9 +79,37 @@ export default function Logg() {
       })
   }
 
-  function deleteUserLogg(userid) {
+  function deleteUserLogg(userid, valgtDato) {
+    const license = localStorage.getItem('LicenseKey')
+
     if (confirm('Sikker på at du vil slette besøket?')) {
-      loadLogg(dato)
+      db.collection('Kunder')
+        .doc(license)
+        .collection('Logg')
+        .doc(valgtDato)
+        .get()
+        .then((doc) => {
+          var userLogg = doc.data()
+          delete userLogg[userid]
+
+          const loggRef = db.collection('Kunder').doc(license).collection('Logg').doc(valgtDato)
+          const brukerRef = db.collection('Kunder').doc(license).collection('Brukere').doc(userid)
+          const statsRef = db
+            .collection('Kunder')
+            .doc(license)
+            .collection('Brukere')
+            .doc('--stats--')
+          const batch = db.batch()
+
+          batch.set(loggRef, userLogg)
+          batch.set(brukerRef, { innsjekkCount: decrement }, { merge: true })
+          batch.set(statsRef, { innsjekkCount: decrement }, { merge: true })
+
+          batch.commit().then(() => {
+            console.log(dato)
+            loadLogg(dato) //FIX AT DEN TAR FEIL DATO!
+          })
+        })
     }
   }
 
