@@ -184,7 +184,7 @@ export default function Brukere() {
         title='Brukere'
         style={{ width: '100%' }}
         columns={[
-          { title: 'Navn', field: 'navn' },
+          { title: 'Navn', field: 'navn', width: '30%' },
           { title: 'Brukernummer', field: 'id' },
           { title: 'Kjønn', field: 'kjonn' },
           { title: 'Bursdag', field: 'bursdag' },
