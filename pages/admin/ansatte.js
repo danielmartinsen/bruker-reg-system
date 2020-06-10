@@ -86,11 +86,9 @@ export default function Ansatte() {
   function deleteAnsatt(id) {
     const license = localStorage.getItem('LicenseKey')
     const userRef = db.collection('Kunder').doc(license).collection('Ansatte').doc(id.toString())
-    const statsRef = db.collection('Kunder').doc(license).collection('Ansatte').doc('--stats--')
     const batch = db.batch()
 
     batch.delete(userRef)
-    batch.set(statsRef, { count: decrement }, { merge: true })
 
     if (confirm('Sikker på at du vil slette brukeren?')) {
       batch.commit().then(() => {

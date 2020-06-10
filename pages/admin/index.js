@@ -91,9 +91,6 @@ export default function Home() {
       if (modeMap[el] > maxCount) {
         maxEl = el
         maxCount = modeMap[el]
-      } else if (modeMap[el] == maxCount) {
-        maxEl += '&' + el
-        maxCount = modeMap[el]
       }
     }
     return maxEl
@@ -216,7 +213,7 @@ export default function Home() {
       <StatsBox title='Dagens melding' info='input' color='92D7E0' />
 
       <p className={styles.sectionTitle} style={{ marginBottom: 0 }}>
-        Måneden
+        Måned
       </p>
       <FormControl className={styles.selectForm}>
         <Select

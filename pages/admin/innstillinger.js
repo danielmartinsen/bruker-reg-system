@@ -58,6 +58,32 @@ export default function Innstillinger() {
       })
   }
 
+  function deleteInfo() {
+    const license = localStorage.getItem('LicenseKey')
+
+    if (prompt('Helt sikker på at du vil slette statistikken?')) {
+      db.collection('Kunder')
+        .doc(license)
+        .collection('Brukere')
+        .get()
+        .then((res) => {
+          res.forEach((element) => {
+            element.ref.delete()
+          })
+        })
+
+      db.collection('Kunder')
+        .doc(license)
+        .collection('Logg')
+        .get()
+        .then((res) => {
+          res.forEach((element) => {
+            element.ref.delete()
+          })
+        })
+    }
+  }
+
   return (
     <Layout>
       <div>
@@ -82,6 +108,11 @@ export default function Innstillinger() {
           <button onClick={() => handleEditInfo('kommune')}>Endre kommune</button>
           <button onClick={() => handleEditInfo('logo')}>Endre logo</button>
           <button onClick={() => handleEditInfo('passord')}>Endre passord</button>
+
+          <div style={{ marginTop: 15 }}>
+            <button>Last ned periode-rapport</button>
+            <button onClick={() => deleteInfo()}>Slett statistikk og start ny periode</button>
+          </div>
         </div>
       </div>
 
