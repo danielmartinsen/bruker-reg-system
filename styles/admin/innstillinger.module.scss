@@ -40,3 +40,47 @@ $beige: #ecbfa0;
   display: inline-block;
   min-width: 200px;
 }
+
+.modalText {
+  margin: 0;
+  font-size: 1.5rem;
+
+  b {
+    color: $dark;
+  }
+}
+
+.modalTitle {
+  color: $dark;
+  margin: 0;
+  font-size: 2rem;
+}
+
+.addInput {
+  width: 95%;
+  padding: 10px;
+  margin: 10px 0px;
+  outline: none;
+
+  font-size: 18px;
+  border: 2px solid $dark;
+  color: $dark;
+}
+
+.addButton {
+  margin: 10px 0px;
+  padding: 10px 15px;
+  outline: none;
+  border: 2px solid $dark;
+
+  background-color: transparent;
+  color: $dark;
+  font-size: 16px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: $dark;
+    color: $white;
+    cursor: pointer;
+  }
+}

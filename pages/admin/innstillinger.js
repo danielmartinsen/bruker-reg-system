@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { loadFirebase } from '../../lib/firebase'
 
+import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+
 import styles from '../../styles/admin/innstillinger.module.scss'
 import Layout from '../../components/admin/layout'
 
 export default function Innstillinger() {
   const firebase = loadFirebase()
   const db = firebase.firestore()
+
+  const [open, setOpen] = useState(false)
+  const [feedback, setFeedback] = useState('')
+  const [passord, setPassord] = useState('')
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => {
+    setOpen(false)
+    setFeedback('')
+  }
 
   const [data, setData] = useState()
 
@@ -61,31 +75,84 @@ export default function Innstillinger() {
   function deleteInfo() {
     const license = localStorage.getItem('LicenseKey')
 
-    if (prompt('Helt sikker på at du vil slette statistikken?')) {
-      db.collection('Kunder')
-        .doc(license)
-        .collection('Brukere')
-        .get()
-        .then((res) => {
-          res.forEach((element) => {
-            element.ref.delete()
-          })
-        })
+    db.collection('Kunder')
+      .doc(license)
+      .get()
+      .then((doc) => {
+        if (doc.data().login.passord == passord) {
+          setFeedback('')
 
-      db.collection('Kunder')
-        .doc(license)
-        .collection('Logg')
-        .get()
-        .then((res) => {
-          res.forEach((element) => {
-            element.ref.delete()
-          })
-        })
-    }
+          db.collection('Kunder')
+            .doc(license)
+            .collection('Brukere')
+            .get()
+            .then((res) => {
+              res.forEach((element) => {
+                if (element.ref.id != '--stats--') {
+                  element.ref.delete()
+                }
+              })
+            })
+
+          db.collection('Kunder')
+            .doc(license)
+            .collection('Logg')
+            .get()
+            .then((res) => {
+              res.forEach((element) => {
+                if (element.ref.id != '--stats--') {
+                  element.ref.delete()
+                }
+              })
+              handleClose()
+            })
+        } else {
+          setFeedback('Feil passord!')
+        }
+      })
   }
 
   return (
     <Layout>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle id='alert-dialog-title'>
+          <h2 className={styles.modalTitle}>
+            Helt sikker på at du vil slette all statistikk for perioden?
+          </h2>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-description'>
+            <p>
+              Du er nå i ferd med å slette all statistikk og starte en ny periode. Dette medfører at
+              alle brukere, og besøksloggen slettes, men ansatte beholdes. Bekreft bare dette om du
+              er helt sikker på hva du gjør. Husk å laste ned periode-rapporten først!
+            </p>
+            <input
+              type='password'
+              name='navn'
+              placeholder='Skriv inn admin-passordet for å bekrefte'
+              className={styles.addInput}
+              onChange={(e) => setPassord(e.target.value)}
+              autoComplete='off'
+            />
+            <input
+              type='button'
+              value='Bekreft og slett'
+              className={styles.addButton}
+              onClick={() => deleteInfo()}
+            />
+            <input
+              type='button'
+              value='Avbryt'
+              className={styles.addButton}
+              style={{ marginLeft: 10 }}
+              onClick={() => handleClose()}
+            />
+            <p>{feedback}</p>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+
       <div>
         <div className={styles.infoDiv}>
           <h2>{data ? data.navn : 'Loading'}</h2>
@@ -111,7 +178,7 @@ export default function Innstillinger() {
 
           <div style={{ marginTop: 15 }}>
             <button>Last ned periode-rapport</button>
-            <button onClick={() => deleteInfo()}>Slett statistikk og start ny periode</button>
+            <button onClick={() => handleOpen()}>Slett statistikk og start ny periode</button>
           </div>
         </div>
       </div>
