@@ -97,6 +97,8 @@ export default function Home() {
   }
 
   function findLeastFrequent(array) {
+    if (array.length == 0) return null
+
     var arrMap = array.reduce(function (obj, val) {
       obj[val] = ++obj[val] || 1
       return obj
@@ -254,31 +256,35 @@ export default function Home() {
       <StatsBox title='Unike brukere' info={totaltUnikeBrukere} color='C7F0BC' />
       <StatsBox
         title='Gjennomsnittlig besøk'
-        info={(totaltBesokstall / totaltDagerAapent).toFixed(0)}
+        info={totaltDagerAapent ? (totaltBesokstall / totaltDagerAapent).toFixed(0) : 0}
         color='C7F0BC'
       />
 
       <StatsBox
         title='Gutter'
-        info={((totaltGutter / totaltBesokstall) * 100).toFixed(0) + '%'}
+        info={totaltGutter ? ((totaltGutter / totaltBesokstall) * 100).toFixed(0) + '%' : '-'}
         color='C7F0BC'
       />
       <StatsBox
         title='Jenter'
-        info={((totaltJenter / totaltBesokstall) * 100).toFixed(0) + '%'}
+        info={totaltJenter ? ((totaltJenter / totaltBesokstall) * 100).toFixed(0) + '%' : '-'}
         color='C7F0BC'
       />
       <StatsBox
         title='Annet'
-        info={((totaltAnnet / totaltBesokstall) * 100).toFixed(0) + '%'}
+        info={totaltAnnet ? ((totaltAnnet / totaltBesokstall) * 100).toFixed(0) + '%' : '-'}
         color='C7F0BC'
       />
 
       <StatsBox title='Dager åpent' info={totaltDagerAapent} color='C7F0BC' />
-      <StatsBox title='Mest pop. tidspunkt' info={totalPopTidspunktMest + ':00'} color='C7F0BC' />
+      <StatsBox
+        title='Mest pop. tidspunkt'
+        info={totalPopTidspunktMest ? totalPopTidspunktMest + ':00' : '-'}
+        color='C7F0BC'
+      />
       <StatsBox
         title='Minst  pop. tidspunkt'
-        info={totalPopTidspunktMinst + ':00'}
+        info={totalPopTidspunktMinst ? totalPopTidspunktMinst + ':00' : '-'}
         color='C7F0BC'
       />
     </Layout>

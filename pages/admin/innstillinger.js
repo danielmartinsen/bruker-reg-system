@@ -88,7 +88,9 @@ export default function Innstillinger() {
             .get()
             .then((res) => {
               res.forEach((element) => {
-                if (element.ref.id != '--stats--') {
+                if (element.ref.id == '--stats--') {
+                  element.ref.set({ innsjekkCount: 0, stats: true, userCount: 0 })
+                } else {
                   element.ref.delete()
                 }
               })

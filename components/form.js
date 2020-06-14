@@ -99,72 +99,46 @@ export default function form() {
     const klokkeslett = dato.getHours()
     const idag = dato.getDate() + '-' + (dato.getMonth() + 1) + '-' + dato.getFullYear()
 
-    db.collection('Kunder')
+    const globalStatsRef = db
+      .collection('Kunder')
+      .doc(license)
+      .collection('Brukere')
+      .doc('--stats--')
+
+    const statsRef = db
+      .collection('Kunder')
       .doc(license)
       .collection('Brukere')
       .doc(brukernummer.toString())
-      .get()
-      .then((doc) => {
-        const count = (doc.data().innsjekkCount += 1)
 
-        db.collection('Kunder')
-          .doc(license)
-          .collection('Brukere')
-          .doc(brukernummer.toString())
-          .get()
-          .then((doc) => {
-            const globalStatsRef = db
-              .collection('Kunder')
-              .doc(license)
-              .collection('Brukere')
-              .doc('--stats--')
+    const userRef = db.collection('Kunder').doc(license).collection('Logg').doc(idag)
 
-            const statsRef = db
-              .collection('Kunder')
-              .doc(license)
-              .collection('Brukere')
-              .doc(brukernummer.toString())
+    const userRef2 = db
+      .collection('Kunder')
+      .doc(license)
+      .collection('Brukere')
+      .doc(brukernummer.toString())
 
-            const userRef = db.collection('Kunder').doc(license).collection('Logg').doc(idag)
+    const batch = db.batch()
 
-            const userRef2 = db
-              .collection('Kunder')
-              .doc(license)
-              .collection('Brukere')
-              .doc(brukernummer.toString())
+    batch.update(statsRef, { innsjekkCount: increment })
+    batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
+    batch.set(
+      userRef,
+      { [brukernummer]: { dato: idag, klokkeslett: klokkeslett, kjonn: kjonn } },
+      { merge: true }
+    )
+    batch.update(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })
+    batch.commit().catch((error) => {
+      handleOpen(
+        `Hmmmm...`,
+        `Merkelig, men jeg får ikke sjekket deg inn. Prøv å skriv inn brukernummeret ditt.`
+      )
 
-            const batch = db.batch()
-
-            batch.update(statsRef, { innsjekkCount: increment })
-            batch.set(globalStatsRef, { innsjekkCount: increment }, { merge: true })
-            batch.set(
-              userRef,
-              { [brukernummer]: { dato: idag, klokkeslett: klokkeslett, kjonn: kjonn } },
-              { merge: true }
-            )
-            batch.update(userRef2, { innsjekk: { dato: idag, klokkeslett: klokkeslett } })
-            batch.commit().catch((error) => {
-              handleOpen(
-                `Hmmmm...`,
-                `Merkelig, men jeg får ikke sjekket deg inn. Prøv å skriv inn brukernummeret ditt.`
-              )
-
-              setTimeout(() => {
-                Router.push('/')
-              }, 3000)
-            })
-          })
-      })
-      .catch((error) => {
-        handleOpen(
-          `Hmmmm...`,
-          `Merkelig, men jeg får ikke sjekket deg inn. Prøv å skriv inn brukernummeret ditt.`
-        )
-
-        setTimeout(() => {
-          Router.push('/')
-        }, 3000)
-      })
+      setTimeout(() => {
+        Router.push('/')
+      }, 3000)
+    })
   }
 
   return (

@@ -1,0 +1,51 @@
+.header {
+  display: inline-block;
+  height: 150px;
+  width: 100%;
+
+  font-family: Ubuntu;
+  margin-bottom: 50px;
+}
+
+.column {
+  display: inline-block;
+  width: 50%;
+
+  img {
+    float: right;
+  }
+
+  h1 {
+    line-height: 1;
+    margin: 0;
+    font-size: 35px;
+  }
+
+  p {
+    line-height: 1;
+    font-size: 18px;
+  }
+}
+
+.content {
+  h3 {
+    line-height: 1;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+
+  p {
+    line-height: 1;
+    font-size: 18px;
+  }
+}
+
+.table {
+  th,
+  td {
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+    text-align: left;
+  }
+}
