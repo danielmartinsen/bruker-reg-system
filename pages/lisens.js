@@ -17,11 +17,14 @@ export default function LisensPage() {
       .then((doc) => {
         if (doc.exists) {
           const dato = new Date()
-          const idagDato = dato.getFullYear() + `${dato.getMonth() + 1}` + dato.getDate()
+          const idagDato =
+            dato.getFullYear() + `${dato.getMonth() + 1}`.padStart(2, '0') + dato.getDate()
           const lisensDato = new Date(doc.data().lisens.dato)
 
           const lisensDatoFormattet =
-            lisensDato.getFullYear() + `${lisensDato.getMonth() + 1}` + lisensDato.getDate()
+            lisensDato.getFullYear() +
+            `${lisensDato.getMonth() + 1}`.padStart(2, '0') +
+            lisensDato.getDate()
 
           if (lisensDatoFormattet > idagDato) {
             if (

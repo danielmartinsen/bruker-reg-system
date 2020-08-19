@@ -1,0 +1,88 @@
+$dark: #0f152d;
+$white: #f1f2fa;
+$red: #fa8a8a;
+$green: #a6d89b;
+$beige: #ecbfa0;
+
+.tableHeader {
+  background-color: #dee0e5;
+
+  th {
+    font-weight: bold;
+    color: $dark;
+  }
+}
+
+.tableBody {
+  span {
+    font-size: 22px;
+    margin: 0px 8px;
+    color: $dark;
+
+    &:hover {
+      color: $red;
+      cursor: pointer;
+    }
+  }
+
+  a {
+    color: $dark;
+  }
+}
+
+.infoBox {
+  display: flex;
+
+  div {
+    margin-right: auto;
+  }
+
+  button {
+    display: block;
+  }
+}
+
+.kundeBtn {
+  padding: 8px 28px;
+  margin-right: 10px;
+  border: none;
+  border-radius: none;
+  outline: none;
+
+  font-size: 18px;
+  background-color: $beige;
+  color: $dark;
+  font-weight: bold;
+
+  &:hover {
+    background-color: $red;
+    cursor: pointer;
+  }
+}
+
+.licenseTag {
+  user-select: all;
+  line-height: 0;
+  display: inline;
+
+  &::selection {
+    background: $red;
+  }
+}
+
+.button {
+  margin-right: 15px;
+  padding: 5px 10px;
+  outline: none;
+  border: 1px solid $dark;
+
+  background-color: transparent;
+  color: $dark;
+  font-size: 14px;
+
+  &:hover {
+    background-color: $dark;
+    color: $white;
+    cursor: pointer;
+  }
+}

@@ -3,7 +3,7 @@ import Layout from '../components/layout'
 import UserSearch from '../components/userSearch'
 import { loadFirebase } from '../lib/firebase'
 
-export default function Home() {
+export default function Sok() {
   const data = []
 
   useEffect(() => {
