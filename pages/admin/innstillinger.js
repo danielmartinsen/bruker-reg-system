@@ -367,23 +367,19 @@ export default function Innstillinger() {
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {tilbud.map((entry) => {
               return (
-                <div
-                  style={{
-                    padding: '5px 20px',
-                    margin: 10,
-                    border: '2px solid black',
-                    width: '43%',
-                  }}>
+                <div className={styles.tilbudBox}>
                   <h2>{entry}</h2>
-                  <a>Slett</a>
+                  <div>
+                    <button>Last ned rapport</button>
+                    <button>Slett</button>
+                  </div>
                 </div>
               )
             })}
           </div>
 
-          <div style={{ marginTop: 15 }} className={styles.buttonDiv}>
+          <div style={{ marginTop: 15, marginLeft: 9 }} className={styles.buttonDiv}>
             <button onClick={() => handleAddOpen()}>Legg til et tilbud</button>
-            <button>Last ned periode-rapport</button>
             <button onClick={() => handleOpen()}>Slett statistikk og start ny periode</button>
           </div>
         </TabPanel>

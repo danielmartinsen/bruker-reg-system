@@ -4,25 +4,29 @@ $red: #fa8a8a;
 $green: #a6d89b;
 $beige: #ecbfa0;
 
+@mixin button {
+  margin-right: 15px;
+  padding: 5px 10px;
+  outline: none;
+  border: 2px solid $dark;
+
+  background-color: transparent;
+  color: $dark;
+  font-size: 16px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: $dark;
+    color: $white;
+    cursor: pointer;
+  }
+}
+
 .buttonDiv {
   margin-top: 50px;
 
   button {
-    margin-right: 15px;
-    padding: 5px 10px;
-    outline: none;
-    border: 2px solid $dark;
-
-    background-color: transparent;
-    color: $dark;
-    font-size: 16px;
-    font-weight: bold;
-
-    &:hover {
-      background-color: $dark;
-      color: $white;
-      cursor: pointer;
-    }
+    @include button();
   }
 }
 
@@ -82,5 +86,25 @@ $beige: #ecbfa0;
     background-color: $dark;
     color: $white;
     cursor: pointer;
+  }
+}
+
+.tilbudBox {
+  display: flex;
+  padding: 10px;
+  margin: 8px;
+  border: 2px solid black;
+  width: 46%;
+
+  h2 {
+    margin: 0;
+  }
+
+  div {
+    margin-left: auto;
+
+    button {
+      @include button();
+    }
   }
 }
